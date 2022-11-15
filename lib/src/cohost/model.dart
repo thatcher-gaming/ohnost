@@ -125,32 +125,32 @@ class Markdown {
 class PostingProject {
   PostingProject({
     required this.handle,
-    required this.displayName,
-    required this.dek,
-    required this.description,
-    required this.avatarURL,
-    required this.avatarPreviewURL,
-    required this.headerURL,
-    required this.headerPreviewURL,
+    this.displayName,
+    this.dek,
+    this.description,
+    this.avatarURL,
+    this.avatarPreviewURL,
+    this.headerURL,
+    this.headerPreviewURL,
     required this.projectId,
     required this.privacy,
-    required this.pronouns,
-    required this.url,
+    this.pronouns,
+    this.url,
     required this.flags,
     required this.avatarShape,
   });
   late final String handle;
-  late final String displayName;
-  late final String dek;
-  late final String description;
-  late final String avatarURL;
-  late final String avatarPreviewURL;
-  late final String headerURL;
-  late final String headerPreviewURL;
+  late final String? displayName;
+  late final String? dek;
+  late final String? description;
+  late final String? avatarURL;
+  late final String? avatarPreviewURL;
+  late final String? headerURL;
+  late final String? headerPreviewURL;
   late final int projectId;
   late final String privacy;
-  late final String pronouns;
-  late final String url;
+  late final String? pronouns;
+  late final String? url;
   late final List<dynamic> flags;
   late final String avatarShape;
 

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:ohnost/src/cohost/model.dart';
 
 class PostView extends StatelessWidget {
@@ -8,7 +8,6 @@ class PostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Text(post.headline);
   }
 }
