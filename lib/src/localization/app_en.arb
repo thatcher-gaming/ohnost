@@ -1,0 +1,17 @@
+{
+  "appTitle": "ohnost",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "homePageTitle": "Home",
+  "@homePageTitle": {
+    "description": "The title of the home tab"
+  },
+  "homePageRefreshTime": "updated like {minutes} minutes ago",
+  "@homePageRefreshTime": {
+    "description": "The thing that says how long it's been since the refresh on the home tab",
+    "placeholders": {
+      "minutes": {}
+    }
+  }
+}
