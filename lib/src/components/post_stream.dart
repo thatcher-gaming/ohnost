@@ -20,7 +20,9 @@ class PostStreamState extends State<PostStream> {
         future: widget.posts,
         builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
           List<Widget> children;
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            children = [Text("aw geeze: ${snapshot.error}")];
+          } else if (snapshot.hasData) {
             children = <Widget>[
               for (var post in snapshot.data!)
                 PostView(

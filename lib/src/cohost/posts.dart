@@ -10,21 +10,25 @@ class PostGetter {
   PostGetter({required this.handle});
 
   Future<List<Post>> getPosts() async {
-    final Uri endpoint = Uri.parse("$apiBase/project/$handle/posts?page=0");
-    Response res = await get(endpoint);
+    try {
+      final Uri endpoint = Uri.parse("$apiBase/project/$handle/posts?page=0");
+      Response res = await get(endpoint);
 
-    if (res.statusCode == 200) {
-      Map<String, dynamic> body = jsonDecode(res.body);
-      List<dynamic> postList = body['items'];
+      if (res.statusCode == 200) {
+        Map<String, dynamic> body = jsonDecode(res.body);
+        List<dynamic> postList = body['items'];
 
-      // throw UnimplementedError();
+        // throw UnimplementedError();
 
-      List<Post> posts =
-          postList.map((dynamic item) => Post.fromJson(item)).toList();
+        List<Post> posts =
+            postList.map((dynamic item) => Post.fromJson(item)).toList();
 
-      return posts;
-    } else {
-      throw "aw geeze. status code ${res.statusCode}";
+        return posts;
+      } else {
+        throw "status code ${res.statusCode}";
+      }
+    } catch (e) {
+      return Future.error(e.toString());
     }
   }
 }
