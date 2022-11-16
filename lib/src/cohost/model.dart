@@ -38,7 +38,7 @@ class Post {
   late final int numSharedComments;
   late final List<dynamic> cws;
   late final List<dynamic> tags;
-  late final List<Blocks?> blocks;
+  late final List<Block> blocks;
   late final String plainTextBody;
   late final PostingProject postingProject;
   late final List<dynamic> shareTree;
@@ -67,7 +67,7 @@ class Post {
     numSharedComments = json['numSharedComments'];
     cws = List.castFrom<dynamic, dynamic>(json['cws']);
     tags = List.castFrom<dynamic, dynamic>(json['tags']);
-    blocks = List.from(json['blocks']).map((e) => Blocks.fromJson(e)).toList();
+    blocks = List.from(json['blocks']).map((e) => Block.fromJson(e)).toList();
     plainTextBody = json['plainTextBody'];
     postingProject = PostingProject.fromJson(json['postingProject']);
     shareTree = List.castFrom<dynamic, dynamic>(json['shareTree']);
@@ -88,37 +88,66 @@ class Post {
   }
 }
 
-class Blocks {
-  Blocks({
+enum BlockType { markdown, attachment, unknown }
+
+class Block {
+  late final String type;
+  BlockType typeGood = BlockType.unknown;
+  late final Markdown? markdown;
+  late final Attachment? attachment;
+
+  Block({
     required this.type,
     this.markdown,
+    this.attachment,
   });
-  late final String type;
-  late final Markdown? markdown;
 
-  Blocks.fromJson(Map<String, dynamic> json) {
+  Block.fromJson(Map<String, dynamic> json) {
     type = json['type'];
+
+    switch (type) {
+      case "markdown":
+        typeGood = BlockType.markdown;
+        break;
+      case "attachment":
+        typeGood = BlockType.attachment;
+        break;
+      default:
+        break;
+    }
 
     if (json['markdown'] != null) {
       markdown = Markdown?.fromJson(json['markdown']);
     }
+    if (json['attachment'] != null) {
+      attachment = Attachment?.fromJson(json['attachment']);
+    }
+  }
+}
+
+class Attachment {
+  late final String fileURL;
+  late final String previewURL;
+  late final String attachmentId;
+  late final String? altText;
+
+  Attachment.fromJson(Map<String, dynamic> json) {
+    fileURL = json['fileURL'];
+    previewURL = json['previewURL'];
+    attachmentId = json['attachmentId'];
+    altText = json['altText'];
   }
 }
 
 class Markdown {
+  late final String content;
+
   Markdown({
-    this.content,
+    required this.content,
   });
-  late final String? content;
 
   Markdown.fromJson(Map<String, dynamic> json) {
     content = json['content'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['content'] = content;
-    return data;
   }
 }
 
@@ -169,24 +198,5 @@ class PostingProject {
     url = json['url'];
     flags = List.castFrom<dynamic, dynamic>(json['flags']);
     avatarShape = json['avatarShape'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['handle'] = handle;
-    data['displayName'] = displayName;
-    data['dek'] = dek;
-    data['description'] = description;
-    data['avatarURL'] = avatarURL;
-    data['avatarPreviewURL'] = avatarPreviewURL;
-    data['headerURL'] = headerURL;
-    data['headerPreviewURL'] = headerPreviewURL;
-    data['projectId'] = projectId;
-    data['privacy'] = privacy;
-    data['pronouns'] = pronouns;
-    data['url'] = url;
-    data['flags'] = flags;
-    data['avatarShape'] = avatarShape;
-    return data;
   }
 }

@@ -13,16 +13,15 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var posts = PostGetter(handle: "leah").getPosts();
     return Layout(
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SectionHeader(AppLocalizations.of(context)!.homePageTitle,
-              AppLocalizations.of(context)!.homePageRefreshTime(5), const [
-            Icon(PhosphorIcons.arrowsClockwiseLight),
-            Icon(PhosphorIcons.dotsThreeLight),
-          ]),
+      SectionHeader(AppLocalizations.of(context)!.homePageTitle,
+          AppLocalizations.of(context)!.homePageRefreshTime(5), const [
+        Icon(PhosphorIcons.arrowsClockwiseLight),
+        Icon(PhosphorIcons.dotsThreeLight),
+      ]),
+      Column(
+        children: [
           PostStream(posts: posts),
-        ]),
+        ],
       ),
       // TODO: add navbar
       Container(),

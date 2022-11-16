@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:ohnost/src/cohost/model.dart';
+import 'package:ohnost/src/components/post/blocks.dart';
 
 class PostView extends StatelessWidget {
   final Post post;
@@ -8,6 +9,8 @@ class PostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(post.headline);
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [Text(post.headline), BlocksList(blocks: post.blocks)]);
   }
 }

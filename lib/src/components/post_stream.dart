@@ -23,7 +23,7 @@ class PostStreamState extends State<PostStream> {
           if (snapshot.hasError) {
             children = [Text("aw geeze: ${snapshot.error}")];
           } else if (snapshot.hasData) {
-            children = <Widget>[
+            children = [
               for (var post in snapshot.data!)
                 PostView(
                   post: post,
