@@ -9,10 +9,10 @@ class Application {
       fontFamily: 'Roboto Serif',
       textTheme: const TextTheme(
         bodyLarge: TextStyle(fontSize: 13),
-        bodyMedium: TextStyle(fontSize: 14, height: 1.4),
+        bodyMedium: TextStyle(fontSize: 15, height: 1.4),
         bodySmall: TextStyle(fontSize: 10),
         headlineMedium: TextStyle(
-          fontSize: 16,
+          fontSize: 17,
           fontWeight: FontWeight.w500,
           color: Colors.black,
         ),
