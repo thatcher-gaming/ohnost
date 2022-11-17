@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var posts = PostGetter(handle: "leah").getPosts();
     return Layout(
-      SectionHeader(AppLocalizations.of(context)!.homePageTitle,
+      SectionHeader("leah's posts",
           AppLocalizations.of(context)!.homePageRefreshTime(5), const [
         Icon(PhosphorIcons.arrowsClockwiseLight),
         Icon(PhosphorIcons.dotsThreeLight),

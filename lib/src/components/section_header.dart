@@ -33,7 +33,10 @@ class SectionHeader extends StatelessWidget {
             ],
           ),
         ),
-        Wrap(spacing: 12, children: iconz)
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Wrap(spacing: 12, children: iconz),
+        )
       ],
     );
   }

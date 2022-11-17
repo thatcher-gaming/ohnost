@@ -25,8 +25,11 @@ class PostStreamState extends State<PostStream> {
           } else if (snapshot.hasData) {
             children = [
               for (var post in snapshot.data!)
-                PostView(
-                  post: post,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: PostView(
+                    post: post,
+                  ),
                 )
             ];
           } else {

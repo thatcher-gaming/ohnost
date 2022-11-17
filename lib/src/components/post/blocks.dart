@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:ohnost/src/app.dart';
 import 'package:ohnost/src/cohost/model.dart' as model;
 
 class BlocksList extends StatelessWidget {
@@ -28,10 +30,11 @@ class BlockView extends StatelessWidget {
       return (Markdown(
         data: block.markdown!.content,
         padding: const EdgeInsets.all(0),
+        styleSheet: MarkdownStyleSheet.fromTheme(Application.theme),
         shrinkWrap: true,
       ));
     } else {
-      return (Text("hey"));
+      return (Text("image"));
     }
   }
 }
