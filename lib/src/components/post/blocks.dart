@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ohnost/src/cohost/model.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:ohnost/src/cohost/model.dart' as model;
 
 class BlocksList extends StatelessWidget {
-  final List<Block> blocks;
+  final List<model.Block> blocks;
 
   const BlocksList({super.key, required this.blocks});
 
@@ -15,14 +17,19 @@ class BlocksList extends StatelessWidget {
 }
 
 class BlockView extends StatelessWidget {
-  final Block block;
+  final model.Block block;
 
   const BlockView({required this.block, super.key});
 
   @override
   Widget build(BuildContext context) {
-    if (block.typeGood == BlockType.markdown) {
-      return (Text(block.markdown!.content));
+    if (block.typeGood == model.BlockType.markdown) {
+      // return Text("hi");
+      return (Markdown(
+        data: block.markdown!.content,
+        padding: const EdgeInsets.all(0),
+        shrinkWrap: true,
+      ));
     } else {
       return (Text("hey"));
     }

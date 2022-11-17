@@ -9,32 +9,30 @@ class Layout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scrollControl = ScrollController();
     return Container(
         color: const Color.fromARGB(255, 255, 255, 255),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
-            child: LayoutBuilder(builder:
-                (BuildContext context, BoxConstraints viewportConstraints) {
-              return Column(
-                children: [
-                  header,
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            minHeight: viewportConstraints.maxHeight,
-                            minWidth: viewportConstraints.maxWidth),
-                        child: content,
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            })));
+        child: LayoutBuilder(builder:
+            (BuildContext context, BoxConstraints viewportConstraints) {
+          return Column(
+            children: [
+              // provide ample padding for the status bar on android
+              Container(
+                  height: MediaQuery.of(context).viewPadding.top,
+                  color: const Color.fromARGB(255, 75, 75, 75)),
+              header,
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
+                  primary: true,
+                  padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
+                  children: [content],
+                ),
+              ),
+            ],
+          );
+        }));
   }
 }

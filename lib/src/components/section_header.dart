@@ -19,16 +19,19 @@ class SectionHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: titleStyle),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: subtitleStyle,
-            )
-          ],
+        Padding(
+          padding: const EdgeInsets.fromLTRB(18, 18, 18, 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: titleStyle),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: subtitleStyle,
+              )
+            ],
+          ),
         ),
         Wrap(spacing: 12, children: iconz)
       ],
