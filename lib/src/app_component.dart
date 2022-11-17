@@ -38,8 +38,8 @@ class OhnostAppState extends State<OhnostApp> {
     return WidgetsApp(
       color: Colors.white,
       onGenerateRoute: Application.router.generator,
-      textStyle: GoogleFonts.robotoSerif(
-          textStyle: const TextStyle(color: Colors.black87)),
+      textStyle:
+          const TextStyle(color: Colors.black, fontFamily: 'Roboto Serif'),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

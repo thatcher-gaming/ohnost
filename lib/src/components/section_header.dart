@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 TextStyle titleStyle = const TextStyle(fontSize: 24);
-TextStyle subtitleStyle = GoogleFonts.robotoSerif(
-    fontStyle: FontStyle.italic,
-    textStyle: const TextStyle(
-        fontSize: 13, color: Color.fromARGB(255, 150, 150, 150)));
+TextStyle subtitleStyle = const TextStyle(
+    fontSize: 13,
+    color: Color.fromARGB(255, 150, 150, 150),
+    fontStyle: FontStyle.italic);
 
 class SectionHeader extends StatelessWidget {
   final String title;

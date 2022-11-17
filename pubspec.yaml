@@ -27,7 +27,15 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
 
+
 flutter:
+  fonts:
+    - family: Roboto Serif
+      fonts:
+        - asset: "fonts/RobotoSerif.ttf"
+        - asset: "fonts/RobotoSerif-Italic.ttf"
+          style: italic
+
   uses-material-design: true
 
   # Enable generation of localized Strings from arb files.

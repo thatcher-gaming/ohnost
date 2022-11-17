@@ -15,8 +15,8 @@ class HomePage extends StatelessWidget {
     return Layout(
       SectionHeader("leah's posts",
           AppLocalizations.of(context)!.homePageRefreshTime(5), const [
-        Icon(PhosphorIcons.arrowsClockwiseLight),
-        Icon(PhosphorIcons.dotsThreeLight),
+        Icon(PhosphorIcons.arrowsClockwiseFill),
+        Icon(PhosphorIcons.dotsThreeCircleFill),
       ]),
       Column(
         children: [

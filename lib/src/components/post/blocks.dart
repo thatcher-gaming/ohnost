@@ -31,6 +31,7 @@ class BlockView extends StatelessWidget {
         data: block.markdown!.content,
         padding: const EdgeInsets.all(0),
         styleSheet: MarkdownStyleSheet.fromTheme(Application.theme),
+        selectable: true,
         shrinkWrap: true,
       ));
     } else {
