@@ -13,18 +13,18 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var posts = PostGetter(handle: "leah").getPosts();
     return Layout(
-      SectionHeader("leah's posts",
+      header: SectionHeader("leah's posts",
           AppLocalizations.of(context)!.homePageRefreshTime(5), const [
         Icon(PhosphorIcons.arrowsClockwiseFill),
         Icon(PhosphorIcons.dotsThreeCircleFill),
       ]),
-      Column(
+      content: Column(
         children: [
           PostStream(posts: posts),
         ],
       ),
       // TODO: add navbar
-      Container(),
+      nav: Container(),
     );
   }
 }

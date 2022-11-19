@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ohnost/src/app.dart';
@@ -53,36 +54,46 @@ class UserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return makeNameSection();
-  }
-
-  final style = const TextStyle(
-    fontWeight: FontWeight.w500,
-  );
-
-  Widget makeNameSection() {
     if (project.displayName is String) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: 6),
-        child: Wrap(
-          spacing: 6,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text(
-              project.displayName!,
-              style: style,
-            ),
-            Opacity(
-                opacity: 0.5,
-                child: Text(
-                  "@${project.handle}",
-                  style: const TextStyle(
-                    fontFamily: 'Roboto Serif',
+          padding: const EdgeInsets.only(bottom: 6),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () => {
+                Application.router.navigateTo(
+                    context, "/user/${project.handle}",
+                    transition: TransitionType.material)
+              },
+              child: Wrap(
+                spacing: 6,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: Image(
+                      image: NetworkImage(project.avatarPreviewURL),
+                      width: 18,
+                      height: 18,
+                      excludeFromSemantics: true,
+                    ),
                   ),
-                ))
-          ],
-        ),
-      );
+                  Text(
+                    project.displayName!,
+                    style: style,
+                  ),
+                  Opacity(
+                      opacity: 0.5,
+                      child: Text(
+                        "@${project.handle}",
+                        style: const TextStyle(
+                          fontFamily: 'Roboto Serif',
+                        ),
+                      ))
+                ],
+              ),
+            ),
+          ));
     } else {
       return Row(
         children: [
@@ -93,4 +104,9 @@ class UserDetails extends StatelessWidget {
       );
     }
   }
+
+  final style = const TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 15.0,
+  );
 }

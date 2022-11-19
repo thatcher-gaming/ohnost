@@ -157,8 +157,8 @@ class PostingProject {
     this.displayName,
     this.dek,
     this.description,
-    this.avatarURL,
-    this.avatarPreviewURL,
+    required this.avatarURL,
+    required this.avatarPreviewURL,
     this.headerURL,
     this.headerPreviewURL,
     required this.projectId,
@@ -172,8 +172,8 @@ class PostingProject {
   late final String? displayName;
   late final String? dek;
   late final String? description;
-  late final String? avatarURL;
-  late final String? avatarPreviewURL;
+  late final String avatarURL;
+  late final String avatarPreviewURL;
   late final String? headerURL;
   late final String? headerPreviewURL;
   late final int projectId;

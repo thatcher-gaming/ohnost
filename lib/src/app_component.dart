@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fluro/fluro.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 import 'package:ohnost/src/app.dart';
 
 import './router.dart';
@@ -35,6 +38,12 @@ class OhnostAppState extends State<OhnostApp> {
 
   @override
   Widget build(BuildContext context) {
+    if (Platform.isAndroid) {
+      // make status bar transparent on android (ios does this by default i believe)
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+          statusBarColor: Color.fromARGB(0, 0, 0, 0)));
+    }
+
     return WidgetsApp(
       color: Colors.white,
       onGenerateRoute: Application.router.generator,
