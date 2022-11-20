@@ -3,7 +3,7 @@
   "@appTitle": {
     "description": "The title of the application"
   },
-  "homePageTitle": "Home",
+  "homePageTitle": "dashboard",
   "@homePageTitle": {
     "description": "The title of the home tab"
   },

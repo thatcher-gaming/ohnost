@@ -32,10 +32,23 @@ class BlockView extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         styleSheet: MarkdownStyleSheet.fromTheme(Application.theme),
         selectable: true,
+        softLineBreak: true,
+        controller: Application.scrollControl,
         shrinkWrap: true,
       ));
     } else {
-      return (Text("image"));
+      return Padding(
+        padding: const EdgeInsets.only(top: 4, bottom: 8),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: (Image(
+            image: NetworkImage(block.attachment!.previewURL),
+            width: double.infinity,
+            height: 200,
+            fit: BoxFit.cover,
+          )),
+        ),
+      );
     }
   }
 }

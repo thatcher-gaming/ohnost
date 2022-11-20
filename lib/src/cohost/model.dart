@@ -41,7 +41,7 @@ class Post {
   late final List<Block> blocks;
   late final String plainTextBody;
   late final PostingProject postingProject;
-  late final List<dynamic> shareTree;
+  late final List<Post> shareTree;
   late final List<dynamic> relatedProjects;
   late final String singlePostPageUrl;
   late final bool effectiveAdultContent;
@@ -70,7 +70,8 @@ class Post {
     blocks = List.from(json['blocks']).map((e) => Block.fromJson(e)).toList();
     plainTextBody = json['plainTextBody'];
     postingProject = PostingProject.fromJson(json['postingProject']);
-    shareTree = List.castFrom<dynamic, dynamic>(json['shareTree']);
+    shareTree =
+        List.from(json['shareTree']).map((e) => Post.fromJson(e)).toList();
     relatedProjects = List.castFrom<dynamic, dynamic>(json['relatedProjects']);
     singlePostPageUrl = json['singlePostPageUrl'];
     effectiveAdultContent = json['effectiveAdultContent'];

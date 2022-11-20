@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:ohnost/src/app.dart';
 import 'package:ohnost/src/cohost/model.dart';
 import 'package:ohnost/src/components/post/post.dart';
 
@@ -25,15 +26,23 @@ class PostStreamState extends State<PostStream> {
           } else if (snapshot.hasData) {
             children = [
               for (var post in snapshot.data!)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: PostView(
-                    post: post,
-                  ),
+                PostView(
+                  post: post,
                 )
             ];
           } else {
-            children = [const Text("loading!")];
+            children = [
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  "servin' up your posts, one sec",
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colours.stone300,
+                      fontStyle: FontStyle.italic),
+                ),
+              )
+            ];
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

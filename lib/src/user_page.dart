@@ -11,7 +11,6 @@ class UserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Layout(
-        header: SectionHeader("@$handle", "", const []), content: Text("hi"));
+    return Layout(header: SectionHeader("@$handle"), content: Text("hi"));
   }
 }

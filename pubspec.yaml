@@ -17,7 +17,9 @@ dependencies:
     sdk: flutter
   flutter_markdown: ^0.6.13
   google_fonts: ^3.0.1
+  html: ^0.15.1
   http: ^0.13.5
+  jiffy: ^5.0.0
   markdown: ^6.0.1
   phosphor_flutter: any
 

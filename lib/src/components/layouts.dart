@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:ohnost/src/app.dart';
 
 class Base extends StatelessWidget {
   final List<Widget> content;
@@ -8,7 +9,7 @@ class Base extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: Colours.stone050,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: LayoutBuilder(builder:
@@ -16,10 +17,8 @@ class Base extends StatelessWidget {
           return Column(children: [
             // provide ample padding for the status bar on android
             Container(
-                height: MediaQuery.of(context).viewPadding.top == 0
-                    ? 4
-                    : MediaQuery.of(context).viewPadding.top,
-                color: const Color.fromARGB(255, 19, 19, 19)),
+                height: MediaQuery.of(context).viewPadding.top,
+                color: Colours.stone300),
             ...content
           ]);
         }));
@@ -43,8 +42,8 @@ class Layout extends StatelessWidget {
         Expanded(
           child: ListView(
             shrinkWrap: true,
-            primary: true,
-            padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
+            controller: Application.scrollControl,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             children: [content],
           ),
         ),
