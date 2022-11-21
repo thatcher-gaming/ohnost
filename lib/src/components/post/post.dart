@@ -6,6 +6,23 @@ import 'package:ohnost/src/app.dart';
 import 'package:ohnost/src/cohost/model.dart';
 import 'package:ohnost/src/components/post/blocks.dart';
 import 'package:ohnost/src/components/post/repost.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+
+class BottomBit extends StatefulWidget {
+  final bool liked;
+
+  final Post post;
+
+  final num commentCount;
+  const BottomBit(
+      {required this.liked,
+      required this.commentCount,
+      required this.post,
+      super.key});
+
+  @override
+  State<BottomBit> createState() => _BottomBitState();
+}
 
 class PostView extends StatelessWidget {
   final Post post;
@@ -37,8 +54,37 @@ class PostView extends StatelessWidget {
           BlocksList(
             blocks: post.blocks,
             headline: post.headline,
+          ),
+          BottomBit(
+            liked: post.isLiked,
+            commentCount: post.numComments,
+            post: post,
           )
         ]),
+      ),
+    );
+  }
+}
+
+class ProfilePicture extends StatelessWidget {
+  final String uri;
+
+  const ProfilePicture(this.uri, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          border: Border.all(width: 2, color: Colours.stone200),
+          borderRadius: BorderRadius.circular(4)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(4),
+        child: Image(
+          image: NetworkImage(uri),
+          width: 18,
+          height: 18,
+          excludeFromSemantics: true,
+        ),
       ),
     );
   }
@@ -56,7 +102,7 @@ class UserDetails extends StatelessWidget {
       return SizedBox(
         width: double.infinity,
         child: Padding(
-            padding: const EdgeInsets.only(bottom: 6),
+            padding: const EdgeInsets.only(bottom: 8),
             child: Wrap(
               alignment: WrapAlignment.spaceBetween,
               crossAxisAlignment: WrapCrossAlignment.center,
@@ -105,25 +151,58 @@ class UserDetails extends StatelessWidget {
   }
 }
 
-class ProfilePicture extends StatelessWidget {
-  const ProfilePicture(this.uri, {super.key});
-
-  final String uri;
-
+class _BottomBitState extends State<BottomBit> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(width: 2, color: Colours.stone200),
-          borderRadius: BorderRadius.circular(4)),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(4),
-        child: Image(
-          image: NetworkImage(uri),
-          width: 18,
-          height: 18,
-          excludeFromSemantics: true,
-        ),
+    bool likedState = widget.post.isLiked;
+
+    Future toggleInnerLike() async {
+      await widget.post.toggleLikedStatus();
+
+      // set it to the canonical state when all is said and done
+      setState(() {
+        likedState = widget.post.isLiked;
+      });
+
+      // i have no idea how effective this approach is considering
+      // the internal Post object can still get out of sync from the
+      // server.
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "${widget.commentCount} Comments",
+            style: Application.theme.textTheme.labelMedium!
+                .copyWith(color: Colours.stone700),
+          ),
+          Wrap(spacing: 12, children: [
+            GestureDetector(
+              child: const Icon(
+                PhosphorIcons.arrowsClockwiseBold,
+                size: 20,
+              ),
+            ),
+            GestureDetector(
+              onTap: (() async {
+                // set the state /immediately/ so the app feels faster than
+                // it actually is.
+                setState(() {
+                  likedState = !likedState;
+                });
+                toggleInnerLike();
+              }),
+              child: Icon(
+                likedState ? PhosphorIcons.heartFill : PhosphorIcons.heartBold,
+                color: likedState ? Colours.purple700 : Colours.stone900,
+                size: 20,
+              ),
+            ),
+          ])
+        ],
       ),
     );
   }

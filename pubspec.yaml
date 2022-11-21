@@ -23,6 +23,7 @@ dependencies:
   jiffy: ^5.0.0
   markdown: ^6.0.1
   phosphor_flutter: any
+  provider: ^6.0.4
 
 dev_dependencies:
   flutter_test:

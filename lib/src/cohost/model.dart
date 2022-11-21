@@ -1,3 +1,7 @@
+import 'package:http/http.dart';
+import 'package:ohnost/src/app.dart';
+import 'package:provider/provider.dart';
+
 class Post {
   Post({
     required this.postId,
@@ -49,7 +53,7 @@ class Post {
   late final bool contributorBlockIncomingOrOutgoing;
   late final bool hasAnyContributorMuted;
   late final String postEditUrl;
-  late final bool isLiked;
+  late bool isLiked;
   late final bool canShare;
   late final bool canPublish;
   late final bool hasCohostPlus;
@@ -86,6 +90,23 @@ class Post {
     hasCohostPlus = json['hasCohostPlus'];
     pinned = json['pinned'];
     commentsLocked = json['commentsLocked'];
+  }
+
+  Future<bool> toggleLikedStatus() async {
+    final Uri endpoint = isLiked
+        ? Uri.parse(
+            "https://cohost.org/rc/relationships/project-615/to-post-$postId/unlike")
+        : Uri.parse(
+            "https://cohost.org/rc/relationships/project-615/to-post-$postId/like");
+    Response res = await post(endpoint,
+        headers: {'Cookie': 'connect.sid=${Application.authCookie}'});
+
+    if (res.statusCode == 204) {
+      isLiked = !isLiked;
+      return isLiked;
+    } else {
+      throw "failed to like, status code ${res.statusCode}";
+    }
   }
 }
 

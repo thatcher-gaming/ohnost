@@ -29,7 +29,7 @@ class Application {
             color: Colours.stone900,
             fontVariations: [
               FontVariation('wght', 500),
-              FontVariation('opsz', 12)
+              FontVariation('opsz', 14)
             ]),
         headlineLarge: TextStyle(
             fontSize: 22,
@@ -59,4 +59,15 @@ class Colours {
   static const Color stone700 = Color.fromARGB(255, 68, 64, 60);
   static const Color stone800 = Color.fromARGB(255, 41, 37, 36);
   static const Color stone900 = Color.fromARGB(255, 28, 25, 23);
+
+  static const Color purple050 = Color.fromARGB(255, 250, 245, 255);
+  static const Color purple100 = Color.fromARGB(255, 243, 232, 255);
+  static const Color purple200 = Color.fromARGB(255, 233, 213, 255);
+  static const Color purple300 = Color.fromARGB(255, 216, 180, 254);
+  static const Color purple400 = Color.fromARGB(255, 192, 132, 252);
+  static const Color purple500 = Color.fromARGB(255, 168, 85, 247);
+  static const Color purple600 = Color.fromARGB(255, 147, 51, 234);
+  static const Color purple700 = Color.fromARGB(255, 126, 34, 206);
+  static const Color purple800 = Color.fromARGB(255, 107, 33, 168);
+  static const Color purple900 = Color.fromARGB(255, 88, 28, 135);
 }
