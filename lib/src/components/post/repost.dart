@@ -17,9 +17,9 @@ class RepostView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Container(
         decoration: BoxDecoration(
-            border: Border.all(color: Colours.stone200, width: 1),
-            color: Colours.stone100,
-            borderRadius: BorderRadius.circular(4)),
+            border: Border.all(color: Colours.purple100, width: 1),
+            color: Colours.purple050,
+            borderRadius: BorderRadius.circular(6)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
