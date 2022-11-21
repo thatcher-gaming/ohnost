@@ -15,21 +15,21 @@ class Application {
             color: Colours.stone900,
             fontSize: 15,
             height: 1.6,
-            fontVariations: [FontVariation('opsz', 12)]),
+            fontVariations: [FontVariation('opsz', 18)]),
         bodySmall: TextStyle(fontSize: 10),
         labelSmall: TextStyle(
             fontSize: 12,
             color: Colours.stone900,
             fontVariations: [
               FontVariation('wght', 500),
-              FontVariation('opsz', 8)
+              FontVariation('opsz', 14)
             ]),
         labelMedium: TextStyle(
-            fontSize: 14,
+            fontSize: 15,
             color: Colours.stone900,
             fontVariations: [
-              FontVariation('wght', 500),
-              FontVariation('opsz', 14)
+              FontVariation('wght', 400),
+              FontVariation('opsz', 18)
             ]),
         headlineLarge: TextStyle(
             fontSize: 22,
@@ -37,8 +37,11 @@ class Application {
             fontVariations: [FontVariation('wght', 700)]),
         displaySmall: TextStyle(
             fontSize: 18,
-            color: Colours.stone900,
-            fontVariations: [FontVariation('wght', 400)]),
+            color: Colours.black,
+            fontVariations: [
+              FontVariation('wght', 400),
+              FontVariation('opsz', 22)
+            ]),
         displayMedium: TextStyle(
             fontSize: 20,
             color: Colours.stone900,
@@ -49,6 +52,8 @@ class Application {
 
 // these are taken from tailwindcss's palette, because it's pretty good!
 class Colours {
+  static const Color black = Color.fromARGB(255, 0, 0, 0);
+
   static const Color stone050 = Color.fromARGB(255, 250, 250, 249);
   static const Color stone100 = Color.fromARGB(255, 245, 245, 244);
   static const Color stone200 = Color.fromARGB(255, 231, 229, 228);
