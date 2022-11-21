@@ -9,7 +9,7 @@ class Base extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colours.stone050,
+        color: Color.fromARGB(255, 255, 255, 255),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: LayoutBuilder(builder:
