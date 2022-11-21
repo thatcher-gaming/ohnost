@@ -15,10 +15,11 @@ class _NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colours.stone300,
+      color: Colours.purple200,
       child: DecoratedBox(
         decoration: const BoxDecoration(
-            border: Border(top: BorderSide(width: 1, color: Colours.stone400))),
+            border:
+                Border(top: BorderSide(width: 1, color: Colours.purple300))),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
           child: SizedBox(
@@ -70,7 +71,7 @@ class _NavigationItemState extends State<NavigationItem> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(1000),
           child: Container(
-            color: widget.selected ? Colours.stone800 : Colours.stone300,
+            color: widget.selected ? Colours.purple900 : Colours.purple200,
             padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
             child: Wrap(
               spacing: 8,

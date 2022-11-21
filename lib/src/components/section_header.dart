@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:ohnost/src/app.dart';
 
-TextStyle titleStyle = const TextStyle(fontSize: 24);
+TextStyle titleStyle = const TextStyle(fontSize: 24, color: Colours.purple900);
 TextStyle subtitleStyle = const TextStyle(
     fontSize: 13, color: Colours.stone400, fontStyle: FontStyle.italic);
 
@@ -15,11 +15,11 @@ class SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colours.stone300,
+      color: Colours.purple200,
       child: DecoratedBox(
         decoration: const BoxDecoration(
             border:
-                Border(bottom: BorderSide(color: Colours.stone400, width: 1))),
+                Border(bottom: BorderSide(color: Colours.purple300, width: 1))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,7 +29,7 @@ class SectionHeader extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: Application.theme.textTheme.displaySmall!),
+                  Text(title, style: Application.theme.textTheme.displaySmall),
                   if (subtitle != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 4),
@@ -49,6 +49,7 @@ class SectionHeader extends StatelessWidget {
                     Icon(
                       icon,
                       size: 20,
+                      color: Colours.stone900,
                     )
                 ]),
               )
