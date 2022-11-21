@@ -25,7 +25,10 @@ class RepostView extends StatelessWidget {
           child: Column(
             children: [
               UserDetails(repost.postingProject, timeDate: repost.publishedAt),
-              BlocksList(blocks: repost.blocks),
+              BlocksList(
+                blocks: repost.blocks,
+                headline: repost.headline,
+              ),
             ],
           ),
         ),

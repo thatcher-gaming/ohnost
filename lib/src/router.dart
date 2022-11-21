@@ -2,8 +2,10 @@
 
 import 'package:fluro/fluro.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ohnost/src/home.dart';
+import 'package:ohnost/src/home_page.dart';
 import 'package:ohnost/src/user_page.dart';
+
+import 'notifs_page.dart';
 
 class Routes {
   static void configureRoutes(FluroRouter router) {
@@ -15,6 +17,7 @@ class Routes {
 
     router.define('/', handler: rootHandler);
     router.define('/user/:handle', handler: userHandler);
+    router.define('/notifications', handler: notifHanlder);
   }
 }
 
@@ -26,4 +29,9 @@ var rootHandler = Handler(
 var userHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return UserPage(params['handle']![0]);
+});
+
+var notifHanlder = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  return const NotificationPage();
 });

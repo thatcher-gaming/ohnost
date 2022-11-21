@@ -7,20 +7,6 @@ import 'package:ohnost/src/cohost/model.dart';
 import 'package:ohnost/src/components/post/blocks.dart';
 import 'package:ohnost/src/components/post/repost.dart';
 
-class Headline extends StatelessWidget {
-  final String headline;
-
-  const Headline(this.headline, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(bottom: 4, top: 8),
-        child: SelectableText(headline,
-            style: Application.theme.textTheme.headlineLarge));
-  }
-}
-
 class PostView extends StatelessWidget {
   final Post post;
   const PostView({super.key, required this.post});
@@ -48,8 +34,10 @@ class PostView extends StatelessWidget {
               ],
             ),
           ),
-          if (post.headline != "") Headline(post.headline),
-          BlocksList(blocks: post.blocks)
+          BlocksList(
+            blocks: post.blocks,
+            headline: post.headline,
+          )
         ]),
       ),
     );

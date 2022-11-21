@@ -35,7 +35,7 @@ class PostQueries {
     try {
       final Uri endpoint = Uri.parse("https://cohost.org/?skipPosts=$skip");
       Response res = await get(endpoint,
-          headers: {'Cookie': 'connect.sid=${Application.auth_cookie}'});
+          headers: {'Cookie': 'connect.sid=${Application.authCookie}'});
 
       if (res.statusCode == 200) {
         final Document parsed = parse(utf8.decode(res.bodyBytes));

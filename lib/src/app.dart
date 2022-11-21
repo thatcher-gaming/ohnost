@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Application {
-  static final String auth_cookie =
-      "s%3A8lDYuFqRlxEEXpoicWTIhUc0D-nKuFZe.Ae59GUZ111B6iplVTrAnIlhqeYkzFtNE9dUAiHC8Dwk";
+  static const String authCookie = "xxx";
   static late final FluroRouter router;
   static final ThemeData theme = ThemeData(
       fontFamily: 'Roboto Serif',

@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ohnost/src/app.dart';
 
@@ -42,8 +43,9 @@ class NavigationItem extends StatefulWidget {
   final String name;
   final IconData icon;
   final bool selected;
+  final String route;
 
-  const NavigationItem(this.name, this.icon,
+  const NavigationItem(this.name, this.icon, this.route,
       {required this.selected, super.key});
 
   @override
@@ -53,25 +55,39 @@ class NavigationItem extends StatefulWidget {
 class _NavigationItemState extends State<NavigationItem> {
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(1000),
-      child: Container(
-        color: widget.selected ? Colours.stone800 : Colours.stone300,
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-        child: Wrap(
-          spacing: 8,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Icon(
-              widget.icon,
-              color: widget.selected ? Colours.stone050 : Colours.stone900,
-              size: 18,
+    return Semantics(
+      button: true,
+      label: "${widget.name} Tab",
+      child: GestureDetector(
+        // TODO: nicer transition, maintain state, etc
+        // there should really only be one navbar widget
+        // per app instance really
+        onTap: () => Application.router.navigateTo(context, widget.route,
+            transition: TransitionType.native,
+            // maintainState: true,
+            clearStack: true,
+            replace: true),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(1000),
+          child: Container(
+            color: widget.selected ? Colours.stone800 : Colours.stone300,
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+            child: Wrap(
+              spacing: 8,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Icon(
+                  widget.icon,
+                  color: widget.selected ? Colours.stone050 : Colours.stone900,
+                  size: 18,
+                ),
+                if (widget.selected)
+                  Text(widget.name,
+                      style: Application.theme.textTheme.labelMedium!
+                          .copyWith(color: Colours.stone050))
+              ],
             ),
-            if (widget.selected)
-              Text(widget.name,
-                  style: Application.theme.textTheme.labelMedium!
-                      .copyWith(color: Colours.stone050))
-          ],
+          ),
         ),
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:ohnost/src/cohost/posts.dart';
 import 'package:ohnost/src/components/layouts.dart';
 import 'package:ohnost/src/components/nav/navigation.dart';
@@ -25,31 +24,31 @@ class HomePage extends StatelessWidget {
       content: Column(
         children: [
           PostStream(posts: posts),
-          GestureDetector(
-            onTap: () => {},
-            child: Text("please.. more posts"),
-          )
         ],
       ),
       nav: const NavigationBar([
         NavigationItem(
           "Dashboard",
           PhosphorIcons.rows,
+          "/",
           selected: true,
         ),
         NavigationItem(
           "Notifications",
           PhosphorIcons.lightning,
+          "/notifications",
           selected: false,
         ),
         NavigationItem(
           "Find",
           PhosphorIcons.binoculars,
+          "/",
           selected: false,
         ),
         NavigationItem(
           "You",
           PhosphorIcons.person,
+          "",
           selected: false,
         ),
       ]),

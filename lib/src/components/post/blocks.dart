@@ -7,21 +7,38 @@ import 'package:ohnost/src/cohost/model.dart' as model;
 
 class BlocksList extends StatelessWidget {
   final List<model.Block> blocks;
+  final String headline;
 
-  const BlocksList({super.key, required this.blocks});
+  const BlocksList({super.key, required this.blocks, required this.headline});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [for (var block in blocks) BlockView(block: block)]);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      if (headline != "") Headline(headline),
+      for (var block in blocks) BlockView(block: block)
+    ]);
+  }
+}
+
+class Headline extends StatelessWidget {
+  final String headline;
+
+  const Headline(this.headline, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.only(bottom: 4),
+        child: SelectableText(headline,
+            style: Application.theme.textTheme.headlineLarge));
   }
 }
 
 class BlockView extends StatelessWidget {
   final model.Block block;
+  final ScrollController scrollControllerLocal = ScrollController();
 
-  const BlockView({required this.block, super.key});
+  BlockView({required this.block, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +50,7 @@ class BlockView extends StatelessWidget {
         styleSheet: MarkdownStyleSheet.fromTheme(Application.theme),
         selectable: true,
         softLineBreak: true,
-        controller: Application.scrollControl,
+        controller: scrollControllerLocal,
         shrinkWrap: true,
       ));
     } else {

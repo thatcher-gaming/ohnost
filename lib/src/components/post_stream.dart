@@ -28,7 +28,11 @@ class PostStreamState extends State<PostStream> {
               for (var post in snapshot.data!)
                 PostView(
                   post: post,
-                )
+                ),
+              GestureDetector(
+                onTap: () => {},
+                child: Text("please.. more posts"),
+              )
             ];
           } else {
             children = [

@@ -30,8 +30,9 @@ class Layout extends StatelessWidget {
   final Widget content;
   final Widget header;
 
-  const Layout(
-      {required this.header, required this.content, this.nav, super.key});
+  final ScrollController scrollController = ScrollController();
+
+  Layout({required this.header, required this.content, this.nav, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class Layout extends StatelessWidget {
         Expanded(
           child: ListView(
             shrinkWrap: true,
-            controller: Application.scrollControl,
+            controller: scrollController,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             children: [content],
           ),
