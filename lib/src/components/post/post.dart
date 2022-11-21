@@ -154,21 +154,6 @@ class UserDetails extends StatelessWidget {
 class _BottomBitState extends State<BottomBit> {
   @override
   Widget build(BuildContext context) {
-    bool likedState = widget.post.isLiked;
-
-    Future toggleInnerLike() async {
-      await widget.post.toggleLikedStatus();
-
-      // set it to the canonical state when all is said and done
-      setState(() {
-        likedState = widget.post.isLiked;
-      });
-
-      // i have no idea how effective this approach is considering
-      // the internal Post object can still get out of sync from the
-      // server.
-    }
-
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: Row(
@@ -186,22 +171,66 @@ class _BottomBitState extends State<BottomBit> {
                 size: 20,
               ),
             ),
-            GestureDetector(
-              onTap: (() async {
-                // set the state /immediately/ so the app feels faster than
-                // it actually is.
-                setState(() {
-                  likedState = !likedState;
-                });
-                toggleInnerLike();
-              }),
-              child: Icon(
-                likedState ? PhosphorIcons.heartFill : PhosphorIcons.heartBold,
-                color: likedState ? Colours.purple700 : Colours.stone900,
-                size: 20,
-              ),
-            ),
+            LikeButton(post: widget.post),
           ])
+        ],
+      ),
+    );
+  }
+}
+
+class LikeButton extends StatefulWidget {
+  const LikeButton({required this.post, super.key});
+
+  final Post post;
+
+  @override
+  State<LikeButton> createState() => _LikeButtonState();
+}
+
+class _LikeButtonState extends State<LikeButton> {
+  late bool likedState;
+
+  testthing() async {
+    // switch the state first so the app /feels/ faster than it is.
+    setState(() {
+      likedState = !likedState;
+    });
+
+    await widget.post.toggleLikedStatus();
+
+    setState(() {
+      likedState = widget.post.isLiked;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    likedState = widget.post.isLiked;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (() {
+        testthing();
+      }),
+      child: Column(
+        children: [
+          if (likedState)
+            const Icon(
+              PhosphorIcons.heartFill,
+              color: Colours.purple700,
+              size: 20,
+            )
+          else
+            const Icon(
+              PhosphorIcons.heartBold,
+              color: Colours.stone900,
+              size: 20,
+            ),
         ],
       ),
     );
