@@ -12,9 +12,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    num cursor = 0;
-    var posts = PostQueries.getHomeFeed(cursor);
-
     return Layout(
       header: SectionHeader(AppLocalizations.of(context)!.homePageTitle,
           iconz: const [
@@ -25,7 +22,8 @@ class HomePage extends StatelessWidget {
         children: [
           PostStream(
             // posts: posts,
-            postGetter: (cursor) => PostQueries.getHomeFeed(cursor),
+            postGetter: (cursor, _) => PostQueries.getHomeFeed(cursor),
+            postsPerPage: 20,
           ),
         ],
       ),

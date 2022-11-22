@@ -4,9 +4,11 @@ import 'package:ohnost/src/cohost/model.dart';
 import 'package:ohnost/src/components/post/post.dart';
 
 class PostStream extends StatefulWidget {
-  final Future<List<Post>> Function(num cursor) postGetter;
+  final Future<List<Post>> Function(num cursor, num limit) postGetter;
+  final num postsPerPage;
 
-  const PostStream({super.key, required this.postGetter});
+  const PostStream(
+      {super.key, required this.postGetter, required this.postsPerPage});
 
   @override
   State<StatefulWidget> createState() {
@@ -16,11 +18,21 @@ class PostStream extends StatefulWidget {
 
 class PostStreamState extends State<PostStream> {
   final num cursor = 0;
+  late num limit = widget.postsPerPage;
+
+  num postCount = 0;
+
+  late Future<List<Post>> posts;
+
+  @override
+  void initState() {
+    super.initState();
+
+    posts = widget.postGetter(cursor, limit);
+  }
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Post>> posts = widget.postGetter(cursor);
-
     return FutureBuilder<List<Post>>(
         future: posts,
         builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
@@ -28,6 +40,7 @@ class PostStreamState extends State<PostStream> {
           if (snapshot.hasError) {
             children = [Text("aw geeze: ${snapshot.error}")];
           } else if (snapshot.hasData) {
+            postCount = postCount + snapshot.data!.length;
             children = [
               for (var post in snapshot.data!)
                 PostView(
