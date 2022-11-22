@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Dart
+name: Build
 
 on:
   push:
@@ -32,7 +32,7 @@ jobs:
       - name: Build APK
         run: flutter build apk
       
-      # TODO: window, linux, ios, etc builds
+      # TODO: windowz, linux, ios, etc builds
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
       # - name: Verify formatting
