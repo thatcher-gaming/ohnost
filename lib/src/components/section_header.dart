@@ -17,9 +17,10 @@ class SectionHeader extends StatelessWidget {
     return Container(
       color: Colours.purple200,
       child: DecoratedBox(
-        decoration: const BoxDecoration(
-            border:
-                Border(bottom: BorderSide(color: Colours.purple300, width: 1))),
+        decoration: BoxDecoration(
+            border: Border(
+                bottom: BorderSide(
+                    color: Colours.purple900.withAlpha(50), width: 1))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,

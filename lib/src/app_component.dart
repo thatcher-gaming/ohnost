@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/services.dart';
 import 'package:ohnost/src/app.dart';
+import 'package:ohnost/src/components/nav/navigation.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import './router.dart';
 
@@ -54,6 +56,41 @@ class OhnostAppState extends State<OhnostApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      builder: (context, child) {
+        return Column(
+          children: [
+            Expanded(
+              child: child!,
+            ),
+            const NavigationBar([
+              NavigationItem(
+                "Dashboard",
+                PhosphorIcons.rows,
+                "/",
+                selected: true,
+              ),
+              NavigationItem(
+                "Notifications",
+                PhosphorIcons.lightning,
+                "/notifications",
+                selected: false,
+              ),
+              NavigationItem(
+                "Find",
+                PhosphorIcons.binoculars,
+                "/",
+                selected: false,
+              ),
+              NavigationItem(
+                "You",
+                PhosphorIcons.person,
+                "",
+                selected: false,
+              ),
+            ]),
+          ],
+        );
+      },
       supportedLocales: const [
         Locale('en', ''), // English, no country code
       ],

@@ -8,12 +8,11 @@ import 'package:ohnost/src/components/post/blocks.dart';
 import 'package:ohnost/src/components/post/repost.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-class BottomBit extends StatefulWidget {
+class BottomBit extends StatelessWidget {
   final bool liked;
-
   final Post post;
-
   final num commentCount;
+
   const BottomBit(
       {required this.liked,
       required this.commentCount,
@@ -21,7 +20,30 @@ class BottomBit extends StatefulWidget {
       super.key});
 
   @override
-  State<BottomBit> createState() => _BottomBitState();
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "$commentCount Comments",
+            style: Application.theme.textTheme.labelMedium!
+                .copyWith(color: Colours.stone700),
+          ),
+          Wrap(spacing: 12, children: [
+            GestureDetector(
+              child: const Icon(
+                PhosphorIcons.arrowsClockwiseBold,
+                size: 20,
+              ),
+            ),
+            LikeButton(post: post),
+          ])
+        ],
+      ),
+    );
+  }
 }
 
 class PostView extends StatelessWidget {
@@ -148,34 +170,6 @@ class UserDetails extends StatelessWidget {
         ],
       );
     }
-  }
-}
-
-class _BottomBitState extends State<BottomBit> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "${widget.commentCount} Comments",
-            style: Application.theme.textTheme.labelMedium!
-                .copyWith(color: Colours.stone700),
-          ),
-          Wrap(spacing: 12, children: [
-            GestureDetector(
-              child: const Icon(
-                PhosphorIcons.arrowsClockwiseBold,
-                size: 20,
-              ),
-            ),
-            LikeButton(post: widget.post),
-          ])
-        ],
-      ),
-    );
   }
 }
 

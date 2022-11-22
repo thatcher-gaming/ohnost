@@ -17,9 +17,10 @@ class _NavigationBarState extends State<NavigationBar> {
     return Container(
       color: Colours.purple200,
       child: DecoratedBox(
-        decoration: const BoxDecoration(
-            border:
-                Border(top: BorderSide(width: 1, color: Colours.purple300))),
+        decoration: BoxDecoration(
+            border: Border(
+                top: BorderSide(
+                    width: 1, color: Colours.purple300.withAlpha(50)))),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
           child: SizedBox(

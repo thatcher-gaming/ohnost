@@ -29,32 +29,6 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      nav: const NavigationBar([
-        NavigationItem(
-          "Dashboard",
-          PhosphorIcons.rows,
-          "/",
-          selected: true,
-        ),
-        NavigationItem(
-          "Notifications",
-          PhosphorIcons.lightning,
-          "/notifications",
-          selected: false,
-        ),
-        NavigationItem(
-          "Find",
-          PhosphorIcons.binoculars,
-          "/",
-          selected: false,
-        ),
-        NavigationItem(
-          "You",
-          PhosphorIcons.person,
-          "",
-          selected: false,
-        ),
-      ]),
     );
   }
 }
