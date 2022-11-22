@@ -23,7 +23,10 @@ class HomePage extends StatelessWidget {
           ]),
       content: Column(
         children: [
-          PostStream(posts: posts),
+          PostStream(
+            // posts: posts,
+            postGetter: (cursor) => PostQueries.getHomeFeed(cursor),
+          ),
         ],
       ),
       nav: const NavigationBar([

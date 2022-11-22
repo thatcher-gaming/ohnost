@@ -4,9 +4,9 @@ import 'package:ohnost/src/cohost/model.dart';
 import 'package:ohnost/src/components/post/post.dart';
 
 class PostStream extends StatefulWidget {
-  final Future<List<Post>> posts;
+  final Future<List<Post>> Function(num cursor) postGetter;
 
-  const PostStream({super.key, required this.posts});
+  const PostStream({super.key, required this.postGetter});
 
   @override
   State<StatefulWidget> createState() {
@@ -15,10 +15,14 @@ class PostStream extends StatefulWidget {
 }
 
 class PostStreamState extends State<PostStream> {
+  final num cursor = 0;
+
   @override
   Widget build(BuildContext context) {
+    Future<List<Post>> posts = widget.postGetter(cursor);
+
     return FutureBuilder<List<Post>>(
-        future: widget.posts,
+        future: posts,
         builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
           List<Widget> children;
           if (snapshot.hasError) {
@@ -37,7 +41,7 @@ class PostStreamState extends State<PostStream> {
           } else {
             children = [
               const Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(14.0),
                 child: Text(
                   "servin' up your posts, one sec",
                   style: TextStyle(
