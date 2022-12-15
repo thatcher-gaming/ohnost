@@ -1,6 +1,8 @@
 import 'package:http/http.dart';
 import 'package:ohnost/src/app.dart';
+import 'package:ohnost/src/cohost/posts.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 class Post {
   Post({
@@ -93,11 +95,13 @@ class Post {
   }
 
   Future<bool> toggleLikedStatus() async {
+    num postToLike =
+        transparentShareOfPostId != null ? transparentShareOfPostId! : postId;
     final Uri endpoint = isLiked
         ? Uri.parse(
-            "https://cohost.org/rc/relationships/project-615/to-post-$postId/unlike")
+            "https://cohost.org/rc/relationships/project-615/to-post-$postToLike/unlike")
         : Uri.parse(
-            "https://cohost.org/rc/relationships/project-615/to-post-$postId/like");
+            "https://cohost.org/rc/relationships/project-615/to-post-$postToLike/like");
     Response res = await post(endpoint,
         headers: {'Cookie': 'connect.sid=${Application.authCookie}'});
 
@@ -220,5 +224,20 @@ class PostingProject {
     url = json['url'];
     flags = List.castFrom<dynamic, dynamic>(json['flags']);
     avatarShape = json['avatarShape'];
+  }
+
+  static Future<Tuple2<PostingProject, List<Post>>> getUserData(
+      String handle) async {
+    try {
+      List<Post> posts = await PostQueries.getPostsFromUser(handle);
+      if (posts.isEmpty) {
+        throw "couldn't gather any user info, unforunately.";
+      }
+      PostingProject project = posts[0].postingProject;
+
+      return Tuple2(project, posts);
+    } catch (e) {
+      return Future.error(e.toString());
+    }
   }
 }

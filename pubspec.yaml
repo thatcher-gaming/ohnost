@@ -24,6 +24,8 @@ dependencies:
   markdown: ^6.0.1
   phosphor_flutter: any
   provider: ^6.0.4
+  routemaster: ^1.0.1
+  tuple: ^2.0.1
 
 dev_dependencies:
   flutter_test:

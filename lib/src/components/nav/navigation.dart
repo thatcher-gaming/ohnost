@@ -1,6 +1,8 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ohnost/src/app.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:routemaster/routemaster.dart';
 
 class NavigationBar extends StatefulWidget {
   const NavigationBar(this.items, {super.key});
@@ -64,11 +66,7 @@ class _NavigationItemState extends State<NavigationItem> {
         // TODO: nicer transition, maintain state, etc
         // there should really only be one navbar widget
         // per app instance really
-        onTap: () => Application.router.navigateTo(context, widget.route,
-            transition: TransitionType.native,
-            // maintainState: true,
-            clearStack: true,
-            replace: true),
+        onTap: () => Routemaster.of(context).push(widget.route),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(1000),
           child: Container(
@@ -95,3 +93,30 @@ class _NavigationItemState extends State<NavigationItem> {
     );
   }
 }
+
+const NavigationBar defaultNav = NavigationBar([
+  NavigationItem(
+    "Dashboard",
+    PhosphorIcons.rows,
+    "/",
+    selected: true,
+  ),
+  NavigationItem(
+    "Notifications",
+    PhosphorIcons.lightning,
+    "/notifications",
+    selected: false,
+  ),
+  NavigationItem(
+    "Find",
+    PhosphorIcons.binoculars,
+    "/",
+    selected: false,
+  ),
+  NavigationItem(
+    "You",
+    PhosphorIcons.person,
+    "",
+    selected: false,
+  ),
+]);

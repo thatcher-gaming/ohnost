@@ -7,6 +7,7 @@ import 'package:ohnost/src/cohost/model.dart';
 import 'package:ohnost/src/components/post/blocks.dart';
 import 'package:ohnost/src/components/post/repost.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:routemaster/routemaster.dart';
 
 class BottomBit extends StatelessWidget {
   final bool liked;
@@ -27,7 +28,7 @@ class BottomBit extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "$commentCount Comments",
+            "$commentCount ${commentCount == 1 ? "Comment" : "Comments"}",
             style: Application.theme.textTheme.labelMedium!
                 .copyWith(color: Colours.stone700),
           ),
@@ -106,6 +107,11 @@ class ProfilePicture extends StatelessWidget {
           width: 18,
           height: 18,
           excludeFromSemantics: true,
+          errorBuilder: (context, error, stackTrace) => Container(
+            // TODO: could really do with telling people that something
+            // went wrong here
+            color: Colours.stone400,
+          ),
         ),
       ),
     );
@@ -132,11 +138,8 @@ class UserDetails extends StatelessWidget {
                 MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
-                    onTap: () => {
-                      Application.router.navigateTo(
-                          context, "/user/${project.handle}",
-                          transition: TransitionType.native)
-                    },
+                    onTap: () =>
+                        Routemaster.of(context).push("/user/${project.handle}"),
                     child: Wrap(
                       spacing: 6,
                       crossAxisAlignment: WrapCrossAlignment.center,

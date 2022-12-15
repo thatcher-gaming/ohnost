@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
     return Layout(
       header: SectionHeader(AppLocalizations.of(context)!.homePageTitle,
           iconz: const [
-            PhosphorIcons.arrowsClockwise,
+            PhosphorIcons.arrowClockwise,
             PhosphorIcons.dotsThree,
           ]),
       content: Column(
@@ -27,6 +27,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+      nav: defaultNav,
     );
   }
 }

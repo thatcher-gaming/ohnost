@@ -63,6 +63,9 @@ class BlockView extends StatelessWidget {
             width: double.infinity,
             height: 200,
             fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => Container(
+              color: Colours.stone400,
+            ),
           )),
         ),
       );

@@ -8,7 +8,7 @@ import 'package:ohnost/src/cohost/api.dart';
 import 'package:ohnost/src/cohost/model.dart';
 
 class PostQueries {
-  Future<List<Post>> getPostsFromUser(String handle) async {
+  static Future<List<Post>> getPostsFromUser(String handle) async {
     try {
       final Uri endpoint = Uri.parse("$apiBase/project/$handle/posts?page=0");
       Response res = await get(endpoint);
