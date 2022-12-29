@@ -474,4 +474,26 @@ class PostingProject {
       return Future.error(e.toString());
     }
   }
+
+  Future<FollowStatus> getFollowStatus() async {
+    Uri endpoint = Uri.parse(
+        "$trpcBase/projects.followingState?batch=1&input={\"0\":{\"projectHandle\":\"$handle\"}}");
+
+    Response res = await get(endpoint,
+        headers: {'Cookie': 'connect.sid=${AppSecrets.cookie}'});
+
+    Map<String, dynamic> json = jsonDecode(res.body)[0]['result']['data'];
+    FollowStatus followStatus = FollowStatus.fromJson(json);
+    return followStatus;
+  }
+}
+
+class FollowStatus {
+  late final int readerToProject;
+  late final int projectToReader;
+
+  FollowStatus.fromJson(Map<String, dynamic> json) {
+    readerToProject = json['readerToProject'];
+    projectToReader = json['projectToReader'];
+  }
 }

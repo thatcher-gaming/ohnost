@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'package:ohnost/search.dart';
 import 'package:ohnost/secrets.dart';
 import 'package:ohnost/settings.dart';
 import 'package:ohnost/singlepost.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,7 +33,7 @@ RoutemasterDelegate routemaster = RoutemasterDelegate(
               '/profile/${AppSecrets.currentProjectHandle}'
             ],
           ),
-      '/dashboard': (_) => const MaterialPage(child: OhnostDashboard()),
+      '/dashboard': (_) => MaterialPage(child: OhnostDashboard()),
       '/notifications': (_) => const MaterialPage(child: OhnostNotifications()),
       '/search': (_) => const MaterialPage(child: SearchPage()),
       '/profile/:handle': (data) =>

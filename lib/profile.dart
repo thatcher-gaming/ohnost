@@ -17,30 +17,6 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<Tuple2<PostingProject, List<Post>>> profileFuture =
         PostingProject.getUserData(handle);
-
-    List<Widget> profileActions;
-    if (handle == AppSecrets.currentProjectHandle) {
-      profileActions = [
-        IconButton(
-          icon: const Icon(Icons.bookmark),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: const Icon(Icons.settings),
-          onPressed: () {
-            Routemaster.of(context).push("/settings");
-          },
-        )
-      ];
-    } else {
-      profileActions = [
-        IconButton(
-          icon: const Icon(Icons.person_add),
-          onPressed: () {},
-        ),
-      ];
-    }
-
     return Scaffold(
       floatingActionButton: handle == AppSecrets.currentProjectHandle
           ? FloatingActionButton(
@@ -52,6 +28,26 @@ class ProfileView extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             PostingProject profile = snapshot.data!.item1;
+            List<Widget> profileActions;
+            if (handle == AppSecrets.currentProjectHandle) {
+              profileActions = [
+                IconButton(
+                  icon: const Icon(Icons.bookmark),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () {
+                    Routemaster.of(context).push("/settings");
+                  },
+                )
+              ];
+            } else {
+              profileActions = [
+                FollowButton(profile),
+              ];
+            }
+
             return PostStream(
               postGetter: (cursor, _) =>
                   PostList.fromUser(handle, cursor: cursor).postFuture,
@@ -74,6 +70,46 @@ class ProfileView extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+}
+
+class FollowButton extends StatefulWidget {
+  const FollowButton(
+    this.profile, {
+    super.key,
+  });
+
+  final PostingProject profile;
+
+  @override
+  State<FollowButton> createState() => _FollowButtonState();
+}
+
+class _FollowButtonState extends State<FollowButton> {
+  late Future<FollowStatus> followStatus;
+  late bool isFollowing;
+  @override
+  initState() {
+    super.initState();
+    followStatus = widget.profile.getFollowStatus();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: followStatus,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          FollowStatus followStatus = snapshot.data!;
+          return IconButton(
+            icon: const Icon(Icons.person_add),
+            onPressed: () {},
+          );
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }

@@ -64,7 +64,9 @@ class _PostStreamState extends State<PostStream> {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController scrollController = ScrollController();
     return CustomScrollView(
+      controller: scrollController,
       slivers: [
         if (widget.appBar != null)
           widget.appBar!
@@ -73,6 +75,14 @@ class _PostStreamState extends State<PostStream> {
             title: widget.titleWidget,
             backgroundColor: Theme.of(context).colorScheme.surface,
             centerTitle: true,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.vertical_align_top),
+                onPressed: () => scrollController.animateTo(0,
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.easeOutQuad),
+              )
+            ],
           ),
         FutureBuilder(
           future: widget.postGetter(0, 25),

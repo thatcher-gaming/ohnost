@@ -6,6 +6,7 @@ import 'package:ohnost/main.dart';
 import 'package:ohnost/model.dart';
 import 'package:ohnost/posts.dart';
 import 'package:ohnost/poststream.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'composer.dart';
 
