@@ -46,9 +46,9 @@ RoutemasterDelegate routemaster = RoutemasterDelegate(
   ),
 );
 
-ColorScheme ohnostColorScheme = ColorScheme.fromSeed(seedColor: Colors.indigo);
+ColorScheme ohnostColorScheme = ColorScheme.fromSeed(seedColor: Colors.pink);
 ColorScheme ohnostDarkColorScheme =
-    ColorScheme.fromSeed(seedColor: Colors.indigo, brightness: Brightness.dark);
+    ColorScheme.fromSeed(seedColor: Colors.pink, brightness: Brightness.dark);
 
 BaseCacheManager cacheManager = CacheManager(Config("ohnost",
     stalePeriod: const Duration(hours: 1), maxNrOfCacheObjects: 100));

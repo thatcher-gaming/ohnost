@@ -10,6 +10,7 @@ dependencies:
   cached_network_image: ^3.2.3
   dart_json_mapper: ^2.2.7+3
   dynamic_color: ^1.5.4
+  easy_image_viewer: ^1.2.0
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.3.0
