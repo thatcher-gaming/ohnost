@@ -6,6 +6,7 @@ import 'package:ohnost/main.dart';
 import 'package:ohnost/model.dart';
 import 'package:ohnost/posts/main.dart';
 import 'package:ohnost/poststream.dart';
+import 'package:routemaster/routemaster.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'composer/composer.dart';
@@ -27,8 +28,8 @@ class _OhnostDashboardState extends State<OhnostDashboard>
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       floatingActionButton: FloatingActionButton(
-          heroTag: "btn1",
-          onPressed: () => PostComposer.showComposeDialog(context),
+          heroTag: "add_post",
+          onPressed: () => Routemaster.of(context).push("/compose"),
           child: const Icon(Icons.add)),
       body: PostStream(
           postGetter: (cursor, limit) {

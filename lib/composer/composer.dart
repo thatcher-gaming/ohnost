@@ -11,31 +11,15 @@ import '../model.dart';
 import 'discard_dialog.dart';
 
 class PostComposer extends StatefulWidget {
-  static void showComposeDialog(BuildContext context,
-      [Post? sharedPost, bool? comment]) {
-    var commentCanon = comment ?? false;
-    showMaterialModalBottomSheet(
-      context: context,
-      animationCurve: Curves.easeInOutCubicEmphasized,
-      duration: const Duration(milliseconds: 400),
-      useRootNavigator: true,
-      bounce: true,
-      builder: (context) => SingleChildScrollView(
-        controller: ModalScrollController.of(context),
-        child: !commentCanon
-            ? PostComposer(
-                sharedPost: sharedPost,
-              )
-            : PostComposer.comment(sharedPost),
-      ),
-    );
-  }
+  // final Post? sharedPost;
 
-  final Post? sharedPost;
   bool isaComment = false;
+  int? postId;
+  String? handle;
 
-  PostComposer({super.key, this.sharedPost});
-  PostComposer.comment(this.sharedPost, {super.key}) {
+  PostComposer({super.key});
+  PostComposer.share({super.key, this.handle, this.postId});
+  PostComposer.comment({super.key, this.handle, this.postId}) {
     isaComment = true;
   }
 
@@ -65,8 +49,7 @@ class _PostComposerState extends State<PostComposer> {
             Block(type: "markdown", markdown: MarkdownBlock(content: postBody))
         ],
         headline: postHeadline.isNotEmpty ? postHeadline : "",
-        shareOfPostId:
-            widget.sharedPost != null ? widget.sharedPost!.postId : null);
+        shareOfPostId: widget.postId);
     await postPost.send();
     if (!mounted) return;
     Navigator.of(context).pop();
@@ -75,7 +58,7 @@ class _PostComposerState extends State<PostComposer> {
   Future<void> postComment() async {
     var _ = await authenticatedPost(
       Uri.parse("$apiBase/comments"),
-      body: jsonEncode({"postId": widget.sharedPost!.postId, "body": postBody}),
+      body: jsonEncode({"postId": widget.postId, "body": postBody}),
     );
 
     if (!mounted) return;
@@ -100,24 +83,6 @@ class _PostComposerState extends State<PostComposer> {
 
   @override
   Widget build(BuildContext context) {
-    var headlineInput = Opacity(
-      opacity: postHeadline.isEmpty ? 0.75 : 1,
-      child: TextField(
-        decoration: const InputDecoration(
-          hintText: "Headline",
-          border: InputBorder.none,
-        ),
-        onChanged: (value) {
-          setState(() {
-            postHeadline = value;
-          });
-        },
-        keyboardType: TextInputType.multiline,
-        maxLines: null,
-        style: Theme.of(context).textTheme.headlineMedium,
-      ),
-    );
-
     var postBodyInput = Opacity(
         opacity: postBody.isEmpty ? 0.5 : 1,
         child: ConstrainedBox(
@@ -139,139 +104,177 @@ class _PostComposerState extends State<PostComposer> {
           ),
         ));
 
-    var postBodyPreview = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Preview",
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        Card(
-          elevation: 12,
-          surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
-          color: Theme.of(context).colorScheme.surface,
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.symmetric(vertical: 12),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: BlocksView([
-                  Block(
-                      type: "markdown",
-                      markdown: MarkdownBlock(content: postBody))
-                ])),
-          ),
-        ),
-      ],
-    );
+    // var postBodyPreview = Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     Text(
+    //       "Preview",
+    //       style: Theme.of(context).textTheme.headlineMedium,
+    //     ),
+    //     Card(
+    //       elevation: 12,
+    //       surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+    //       color: Theme.of(context).colorScheme.surface,
+    //       shadowColor: Colors.transparent,
+    //       margin: const EdgeInsets.symmetric(vertical: 12),
+    //       child: Container(
+    //         width: double.infinity,
+    //         padding: const EdgeInsets.symmetric(horizontal: 18),
+    //         child: Padding(
+    //             padding: const EdgeInsets.symmetric(vertical: 8.0),
+    //             child: BlocksView([
+    //               Block(
+    //                   type: "markdown",
+    //                   markdown: MarkdownBlock(content: postBody))
+    //             ])),
+    //       ),
+    //     ),
+    //   ],
+    // );
 
     bool canBeSent = postBody.isNotEmpty ||
         postHeadline.isNotEmpty ||
-        (widget.sharedPost != null && !widget.isaComment);
+        (widget.postId != null && !widget.isaComment);
+
+    Widget composerFab = Padding(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: FloatingActionButton(
+        heroTag: "add_post",
+        elevation: 0,
+        onPressed: canBeSent ? () => postPost() : null,
+        child: uploading
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(),
+              )
+            : const Icon(Icons.arrow_upward),
+      ),
+    );
+
+    Widget headlineInput = Opacity(
+      opacity: postHeadline.isEmpty ? 0.75 : 1,
+      child: TextField(
+        decoration: const InputDecoration(
+          hintText: "Headline",
+          border: InputBorder.none,
+        ),
+        onChanged: (value) {
+          setState(() {
+            postHeadline = value;
+          });
+        },
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
+        style: Theme.of(context).textTheme.headlineMedium,
+      ),
+    );
 
     return WillPopScope(
       onWillPop: tryCloseComposer,
-      child: Material(
-        color: Theme.of(context).colorScheme.surface,
-        surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
-        elevation: 4,
-        child: Container(
-          constraints: const BoxConstraints(
-            minHeight: 550,
-          ),
+      child: Scaffold(
+        appBar: AppBar(),
+        body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(
+            padding: const EdgeInsets.fromLTRB(
               18,
               36,
               18,
-              MediaQuery.of(context).viewInsets.bottom + 36,
+              0,
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (widget.sharedPost != null && !widget.isaComment)
-                  ShareIndicator(widget.sharedPost!),
-                Wrap(
-                  spacing: 12,
-                  children: [
-                    IconButton(
-                        onPressed: () async {
-                          bool shouldClose = await tryCloseComposer();
-                          if (shouldClose && mounted) {
-                            Navigator.of(context).pop();
-                          }
-                          return;
-                        },
-                        icon: const Icon(Icons.close)),
-                    if (!widget.isaComment)
-                      IconButton(
-                          onPressed: () {}, icon: const Icon(Icons.edit_note)),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: widget.isaComment
-                                ? Text("Comment",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium)
-                                : headlineInput,
-                          ),
-                          Opacity(
-                            opacity: canBeSent ? 1 : 0.25,
-                            child: FloatingActionButton.large(
-                              onPressed: canBeSent ? () => postPost() : null,
-                              elevation: 0,
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .tertiaryContainer,
-                              foregroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .onTertiaryContainer,
-                              child: uploading
-                                  ? CircularProgressIndicator(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimaryContainer,
-                                    )
-                                  : const Icon(Icons.arrow_upward),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      postBodyInput,
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      if (postBody.isNotEmpty) postBodyPreview
-                    ],
-                  ),
-                ),
+                if (widget.handle != null) ShareIndicator(widget.handle!),
+                headlineInput,
+                postBodyInput,
               ],
             ),
           ),
         ),
+        bottomNavigationBar: Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: const BottomAppBar(
+            color: Colors.white,
+            child: ComposerActions(),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
+        floatingActionButton: composerFab,
       ),
     );
   }
 }
 
-class ShareIndicator extends StatelessWidget {
-  final Post sharedPost;
+class ComposerActions extends StatelessWidget {
+  const ComposerActions({super.key});
 
-  const ShareIndicator(this.sharedPost, {super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const ComposerMenu(),
+        IconButton(
+          icon: const Icon(Icons.image_outlined),
+          tooltip: "Add Image…",
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: const Icon(Icons.tag),
+          tooltip: "Edit Tags…",
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: const Icon(Icons.warning),
+          tooltip: "Edit CWs…",
+          onPressed: () {},
+        ),
+      ],
+    );
+  }
+}
+
+class ComposerMenu extends StatelessWidget {
+  const ComposerMenu({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MenuAnchor(
+      builder: (context, controller, child) {
+        return IconButton(
+          onPressed: () {
+            if (controller.isOpen) {
+              controller.close();
+            } else {
+              controller.open();
+            }
+          },
+          icon: const Icon(Icons.more_vert),
+        );
+      },
+      menuChildren: [
+        MenuItemButton(
+          leadingIcon: const Icon(Icons.visibility),
+          onPressed: () {},
+          child: const Text('Preview'),
+        ),
+        MenuItemButton(
+          leadingIcon: const Icon(Icons.eighteen_up_rating),
+          onPressed: () {},
+          child: const Text('Mark as 18+'),
+        ),
+      ],
+    );
+  }
+}
+
+class ShareIndicator extends StatelessWidget {
+  final String handle;
+
+  const ShareIndicator(this.handle, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -293,7 +296,7 @@ class ShareIndicator extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSecondaryContainer,
               ),
               Text(
-                "Sharing @${sharedPost.postingProject.handle}'s post",
+                "Sharing @$handle's post",
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSecondaryContainer),
               ),

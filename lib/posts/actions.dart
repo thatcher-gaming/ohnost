@@ -110,7 +110,8 @@ class _PostViewActionsState extends State<PostViewActions> {
                   onPressed: !widget.post.sharesLocked
                       ? () {
                           HapticFeedback.lightImpact();
-                          PostComposer.showComposeDialog(context, widget.post);
+                          Routemaster.of(context).push(
+                              '/share/${widget.post.postingProject.handle}/${widget.post.postId}');
                         }
                       : null,
                   icon: const Icon(Icons.cached),

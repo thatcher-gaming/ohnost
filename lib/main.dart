@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:ohnost/composer/composer.dart';
 import 'package:ohnost/dashboard.dart';
 import 'package:ohnost/db.dart';
 import 'package:ohnost/model.dart';
@@ -68,7 +69,18 @@ RoutemasterDelegate routemaster = RoutemasterDelegate(
             ),
           ),
           maintainState: false),
-      '/settings': (data) => const MaterialPage(child: SettingsPage())
+      '/settings': (data) => const MaterialPage(child: SettingsPage()),
+      '/compose': (data) => MaterialPage(child: PostComposer()),
+      '/share/:handle/:id': (data) => MaterialPage(
+            child: PostComposer.share(
+                postId: int.parse(data.pathParameters['id']!),
+                handle: data.pathParameters['handle']!),
+          ),
+      '/comment/:id': (data) => MaterialPage(
+            child: PostComposer.comment(
+              postId: int.parse(data.pathParameters['id']!),
+            ),
+          ),
     },
   ),
 );

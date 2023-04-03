@@ -5,6 +5,7 @@ import 'package:ohnost/composer/composer.dart';
 import 'package:ohnost/posts/main.dart';
 import 'package:ohnost/posts/user_info.dart';
 import 'package:ohnost/secrets.dart';
+import 'package:routemaster/routemaster.dart';
 
 import 'model.dart';
 
@@ -116,7 +117,7 @@ class CommentButtonThingInner extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
-        PostComposer.showComposeDialog(context, post, true);
+        Routemaster.of(context).push("/comment/${post.postId}");
       },
       child: Padding(
         padding: const EdgeInsets.all(18.0),

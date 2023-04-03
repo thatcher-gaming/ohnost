@@ -31,7 +31,7 @@ class _ProfileViewState extends State<ProfileView>
       floatingActionButton: widget.handle == AppSecrets.currentProjectHandle
           ? FloatingActionButton(
               heroTag: "btn2",
-              onPressed: () => PostComposer.showComposeDialog(context),
+              onPressed: () => Routemaster.of(context).push('/compose'),
               child: const Icon(Icons.add))
           : null,
       body: FutureBuilder(
