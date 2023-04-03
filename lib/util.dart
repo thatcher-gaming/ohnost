@@ -5,6 +5,7 @@ import 'package:html/parser.dart' show parse;
 import 'package:ohnost/secrets.dart';
 
 authenticatedGet(Uri uri) async {
+  if (AppSecrets.cookie.isEmpty) throw Error();
   return await get(uri,
       headers: {'Cookie': 'connect.sid=${AppSecrets.cookie}'});
 }

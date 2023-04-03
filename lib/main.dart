@@ -1,16 +1,17 @@
+import 'dart:convert';
+
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:ohnost/dashboard.dart';
 import 'package:ohnost/db.dart';
-import 'package:ohnost/notifications.dart';
+import 'package:ohnost/model.dart';
+import 'package:ohnost/notifications/notifications.dart';
 import 'package:ohnost/profile.dart';
 import 'package:ohnost/search/search.dart';
 import 'package:ohnost/secrets.dart';
 import 'package:ohnost/settings.dart';
 import 'package:ohnost/tags.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:ohnost/singlepost.dart';
 import 'package:routemaster/routemaster.dart';
 
@@ -35,15 +36,36 @@ RoutemasterDelegate routemaster = RoutemasterDelegate(
       '/dashboard': (_) => const MaterialPage(child: OhnostDashboard()),
       '/notifications': (_) => const MaterialPage(child: OhnostNotifications()),
       '/search': (_) => const MaterialPage(child: SearchPage()),
-      '/profile/:handle': (data) =>
-          MaterialPage(child: ProfileView(data.pathParameters['handle']!)),
-      '/post/:handle/:postId': (data) => MaterialPage(
-          child: JustOnePost.fromID(int.parse(data.pathParameters['postId']!),
-              data.pathParameters['handle']!)),
+      '/profile/:handle': (data) => MaterialPage(
+          key: ValueKey("profile-${data.pathParameters['handle']!}"),
+          child: ProfileView(data.pathParameters['handle']!)),
+      '/profile/:handle/:postId': (data) {
+        /* 
+          if you were thinking it was silly that we need to serialise and then
+          deserialse the post just to get it through the router, it is!
+          but this is the route i have chosen.
+        */
+        if (data.queryParameters.containsKey('post')) {
+          Post post = Post.fromJson(jsonDecode(data.queryParameters['post']!));
+          return MaterialPage(
+            key: ValueKey(post.postId.toString()),
+            child: JustOnePost(post),
+          );
+        }
+        return MaterialPage(
+          key: ValueKey(data.pathParameters['postId']!),
+          child: JustOnePost.fromID(
+            int.parse(data.pathParameters['postId']!),
+            data.pathParameters['handle']!,
+          ),
+        );
+      },
       '/tag/:tag': (data) => MaterialPage(
           child: TagPage(
             Uri.decodeFull(data.pathParameters['tag']!),
-            key: ValueKey(data.pathParameters['tag']!,),
+            key: ValueKey(
+              data.pathParameters['tag']!,
+            ),
           ),
           maintainState: false),
       '/settings': (data) => const MaterialPage(child: SettingsPage())
@@ -51,9 +73,9 @@ RoutemasterDelegate routemaster = RoutemasterDelegate(
   ),
 );
 
-ColorScheme ohnostColorScheme = ColorScheme.fromSeed(seedColor: Colors.green);
+ColorScheme ohnostColorScheme = ColorScheme.fromSeed(seedColor: Colors.pink);
 ColorScheme ohnostDarkColorScheme =
-    ColorScheme.fromSeed(seedColor: Colors.green, brightness: Brightness.dark);
+    ColorScheme.fromSeed(seedColor: Colors.pink, brightness: Brightness.dark);
 
 BaseCacheManager cacheManager = CacheManager(Config("ohnost-cache",
     stalePeriod: const Duration(hours: 1), maxNrOfCacheObjects: 100));

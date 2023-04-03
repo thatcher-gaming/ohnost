@@ -130,6 +130,7 @@ class Post {
   late final bool sharesLocked;
   late final bool commentsLocked;
   late final Map<int, List<CommentOuter>> comments;
+  late final Map<String, dynamic> sourceJson;
 
   Post.fromJson(Map<String, dynamic> json) {
     postId = json['postId'];
@@ -162,6 +163,7 @@ class Post {
     pinned = json['pinned'];
     commentsLocked = json['commentsLocked'];
     sharesLocked = json['sharesLocked'];
+    sourceJson = json;
   }
 
   Future<bool> toggleLikedStatus() async {

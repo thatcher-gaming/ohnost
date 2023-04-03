@@ -19,28 +19,31 @@ class PostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        shadowColor: Colors.transparent,
-        surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
-        elevation: 1,
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // the bit saying who the user is
-              UserInfoPart(post.postingProject, date: post.publishedAt,),
-              // show previous shares if they exist
-              if (post.shareTree.isNotEmpty) ShareTree(post),
-              // the post content itself
-              BlocksView.frompost(post, truncate: truncate),
-              // the tags if they exist
-              if (post.tags.isNotEmpty) TagList(post.tags),
-              // fun buttons
-              PostViewActions(post)
-            ],
-          ),
-        ));
+    return Hero(
+      tag: post.postId,
+      child: Card(
+          shadowColor: Colors.transparent,
+          surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+          elevation: 1,
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // the bit saying who the user is
+                UserInfoPart(post.postingProject, date: post.publishedAt,),
+                // show previous shares if they exist
+                if (post.shareTree.isNotEmpty) ShareTree(post),
+                // the post content itself
+                BlocksView.frompost(post, truncate: truncate),
+                // the tags if they exist
+                if (post.tags.isNotEmpty) TagList(post.tags),
+                // fun buttons
+                PostViewActions(post)
+              ],
+            ),
+          )),
+    );
   }
 }

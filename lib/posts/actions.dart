@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:routemaster/routemaster.dart';
@@ -138,23 +140,28 @@ class CommentsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Routemaster.of(context)
-            .push('/post/${post.postingProject.handle}/${post.postId}');
+        Routemaster.of(context).push(
+            '/profile/${post.postingProject.handle}/${post.postId}',
+            queryParameters: {"post": jsonEncode(post.sourceJson)});
       },
       style: buttonStyle,
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Wrap(spacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
-            const Icon(
-              Icons.chat_bubble_outline,
-              size: 20,
-            ),
-            if (post.numComments + post.numSharedComments != 0 ) Text(
-              post.numSharedComments == 0
-                  ? "${post.numComments}"
-                  : "${post.numSharedComments + post.numComments} (${post.numSharedComments} Shared)",
-            ),
-          ])),
+          child: Wrap(
+              spacing: 8,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                const Icon(
+                  Icons.chat_bubble_outline,
+                  size: 20,
+                ),
+                if (post.numComments + post.numSharedComments != 0)
+                  Text(
+                    post.numSharedComments == 0
+                        ? "${post.numComments}"
+                        : "${post.numSharedComments + post.numComments} (${post.numSharedComments} Shared)",
+                  ),
+              ])),
     );
   }
 }

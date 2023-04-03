@@ -9,7 +9,7 @@ import 'model.dart';
 
 class JustOnePost extends StatelessWidget {
   late final Post? post;
-  late final Future<Post>? postFuture;
+  Future<Post>? postFuture;
   late final Future<Map<String, List<CommentOuter>>> commentsFuture;
   late final int postID;
   late final String handle;
@@ -17,6 +17,14 @@ class JustOnePost extends StatelessWidget {
   JustOnePost(this.post, {super.key}) {
     handle = post!.postingProject.handle;
     postID = post!.postId;
+    commentsFuture = Comments.getCommentsFromId(postID, handle);
+  }
+
+  JustOnePost.fromJSON(Map<String, dynamic> json, {super.key}) {
+    post = Post.fromJson(json);
+    handle = post!.postingProject.handle;
+    postID = post!.postId;
+    commentsFuture = Comments.getCommentsFromId(postID, handle);
   }
 
   JustOnePost.fromID(this.postID, this.handle, {super.key}) {

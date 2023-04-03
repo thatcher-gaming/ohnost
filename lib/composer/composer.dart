@@ -16,8 +16,10 @@ class PostComposer extends StatefulWidget {
     var commentCanon = comment ?? false;
     showMaterialModalBottomSheet(
       context: context,
-      animationCurve: Curves.easeOutQuart,
+      animationCurve: Curves.easeInOutCubicEmphasized,
+      duration: const Duration(milliseconds: 400),
       useRootNavigator: true,
+      bounce: true,
       builder: (context) => SingleChildScrollView(
         controller: ModalScrollController.of(context),
         child: !commentCanon

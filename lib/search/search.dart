@@ -35,7 +35,8 @@ class _SearchPageState extends State<SearchPage>
     var projectEndpoint =
         """$trpcBase/projects.searchByHandle?input={"query":"$value","skipMinimum":false}""";
     var res = await authenticatedGet(Uri.parse(projectEndpoint));
-    List<dynamic> json = jsonDecode(utf8.decode(res.bodyBytes))['result']['data']['projects'];
+    List<dynamic> json =
+        jsonDecode(utf8.decode(res.bodyBytes))['result']['data']['projects'];
     List<PostingProject> projects =
         json.map((value) => PostingProject.fromJson(value)).toList();
 
@@ -49,23 +50,28 @@ class _SearchPageState extends State<SearchPage>
         title: const Text("Search"),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 18.0),
-        child: Expanded(
-          child: Column(children: [
-            TextField(
-              controller: textController,
-              onSubmitted: (value) => searchForThing(value),
-              textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
-                  hintText: "looking for something?",
-                  filled: true,
-                  fillColor: Theme.of(context).colorScheme.surfaceVariant),
-              style: Theme.of(context).textTheme.bodyLarge,
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Flexible(
+              fit: FlexFit.loose,
+              child: Column(
+                children: [
+                  TextField(
+                    controller: textController,
+                    onSubmitted: (value) => searchForThing(value),
+                    textInputAction: TextInputAction.search,
+                    decoration: InputDecoration(
+                        hintText: "looking for something?",
+                        filled: true,
+                        fillColor:
+                            Theme.of(context).colorScheme.surfaceVariant),
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  if (projects.isNotEmpty) ProjectList(projects),
+                ],
+              ),
             ),
-            if (projects.isNotEmpty) ProjectList(projects),
-          ])
-        )
-      ),
+          ])),
     );
   }
 }

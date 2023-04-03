@@ -79,9 +79,11 @@ class _PostStreamState extends State<PostStream> {
             actions: [
               IconButton(
                 icon: const Icon(Icons.vertical_align_top),
-                onPressed: () => scrollController.animateTo(0,
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.easeOutQuad),
+                onPressed: () => scrollController.animateTo(
+                  0,
+                  duration: const Duration(seconds: 1),
+                  curve: Curves.easeInOutCubicEmphasized,
+                ),
               )
             ],
           ),

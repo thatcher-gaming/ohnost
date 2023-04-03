@@ -36,13 +36,19 @@ class SharedPost extends StatelessWidget {
         shadowColor: Colors.transparent,
         elevation: 7,
         surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
-        margin: EdgeInsets.symmetric(vertical: 4),
+        margin: const EdgeInsets.symmetric(vertical: 4),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
-          child: Column(children: [
-            UserInfoPart(sharedPost.postingProject),
-            BlocksView.frompost(sharedPost, truncate: true,)
-          ]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              UserInfoPart(sharedPost.postingProject),
+              BlocksView.frompost(
+                sharedPost,
+                truncate: true,
+              )
+            ],
+          ),
         ),
       ),
     );
