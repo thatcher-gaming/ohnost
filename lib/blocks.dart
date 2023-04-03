@@ -78,7 +78,7 @@ class ReadMoreButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton.icon(
       onPressed: () {
-        Routemaster.of(context).push("/profile/$handle/$id");
+        Routemaster.of(context).push("/posts/$handle/$id");
       },
       icon: const Icon(Icons.expand_more),
       label: const Text("Read More"),

@@ -39,7 +39,7 @@ RoutemasterDelegate routemaster = RoutemasterDelegate(
       '/profile/:handle': (data) => MaterialPage(
           key: ValueKey("profile-${data.pathParameters['handle']!}"),
           child: ProfileView(data.pathParameters['handle']!)),
-      '/profile/:handle/:postId': (data) {
+      '/post/:handle/:postId': (data) {
         /* 
           if you were thinking it was silly that we need to serialise and then
           deserialse the post just to get it through the router, it is!

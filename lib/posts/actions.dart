@@ -141,7 +141,7 @@ class CommentsButton extends StatelessWidget {
     return TextButton(
       onPressed: () {
         Routemaster.of(context).push(
-            '/profile/${post.postingProject.handle}/${post.postId}',
+            '/post/${post.postingProject.handle}/${post.postId}',
             queryParameters: {"post": jsonEncode(post.sourceJson)});
       },
       style: buttonStyle,
