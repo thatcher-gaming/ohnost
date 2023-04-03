@@ -4,6 +4,30 @@ import 'package:ohnost/model.dart';
 import 'package:ohnost/posts/user_info.dart';
 import 'package:routemaster/routemaster.dart';
 
+class ProjectList extends StatelessWidget {
+  const ProjectList(this.projects, {super.key});
+
+  final List<PostingProject> projects;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Pages", style: Theme.of(context).textTheme.headlineMedium),
+          const SizedBox(
+            height: 8,
+          ),
+          for (var project in projects) ProjectEntry(project),
+        ],
+      ),
+    );
+  }
+}
+
 class ProjectEntry extends StatelessWidget {
   const ProjectEntry(this.project, {super.key});
 

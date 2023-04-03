@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ohnost/api.dart';
 import 'package:ohnost/model.dart';
-import 'package:ohnost/search/project_entry.dart';
+import 'package:ohnost/search/tags.dart';
+import 'package:ohnost/search/projects.dart';
 import 'package:ohnost/util.dart';
 
 class SearchPage extends StatefulWidget {
@@ -25,8 +26,10 @@ class _SearchPageState extends State<SearchPage>
 
   searchForThing(String value) async {
     List<PostingProject> projects = await projectQuery(value);
+    List<String> tags = await tagQuery(value);
 
     setState(() {
+      this.tags = tags;
       this.projects = projects;
     });
   }
@@ -41,6 +44,16 @@ class _SearchPageState extends State<SearchPage>
         json.map((value) => PostingProject.fromJson(value)).toList();
 
     return projects;
+  }
+
+  tagQuery(String value) async {
+    var tagEndpoint = """$trpcBase/tags.query?input={"query":"$value"}""";
+    var res = await authenticatedGet(Uri.parse(tagEndpoint));
+    List<dynamic> json =
+        jsonDecode(utf8.decode(res.bodyBytes))['result']['data']['result'];
+    List<String> result = json.map((e) => e['content'] as String).toList();
+
+    return result;
   }
 
   @override
@@ -68,6 +81,7 @@ class _SearchPageState extends State<SearchPage>
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   if (projects.isNotEmpty) ProjectList(projects),
+                  if (tags.isNotEmpty) TagList(tags),
                 ],
               ),
             ),
@@ -76,26 +90,3 @@ class _SearchPageState extends State<SearchPage>
   }
 }
 
-class ProjectList extends StatelessWidget {
-  const ProjectList(this.projects, {super.key});
-
-  final List<PostingProject> projects;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Pages", style: Theme.of(context).textTheme.headlineMedium),
-          const SizedBox(
-            height: 8,
-          ),
-          for (var project in projects) ProjectEntry(project),
-        ],
-      ),
-    );
-  }
-}
