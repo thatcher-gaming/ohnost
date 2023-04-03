@@ -1,0 +1,57 @@
+name: ohnost
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=2.19.5 <3.0.0'
+
+dependencies:
+  cached_network_image: ^3.2.3
+  dart_json_mapper: ^2.2.7+3
+  dynamic_color: ^1.5.4
+  easy_image_viewer: ^1.2.0
+  flutter:
+    sdk: flutter
+  flutter_cache_manager: ^3.3.0
+  flutter_markdown: ^0.6.13
+  flutter_widget_from_html: ^0.10.0
+  google_fonts: ^4.0.3
+  heroicons_flutter: ^0.2.3
+  http: ^0.13.5
+  intl: ^0.18.0
+  jiffy: ^6.1.0
+  sqflite:
+  path:
+  modal_bottom_sheet:
+    git:
+      url: https://github.com/CoolDude53/modal_bottom_sheet.git
+      ref: d3779be7d661481cc0d99090d6356a286ae4f86b
+      path: modal_bottom_sheet
+  path_provider: ^2.0.11
+  phosphor_flutter: ^1.4.0
+  reflectable: ^4.0.4
+  routemaster:
+    git:
+      url: https://github.com/thatcher-gaming/routemaster
+  shared_preferences: ^2.0.15
+  tuple: ^2.0.1
+  url_launcher: ^6.1.7
+  # webview_flutter: ^4.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.12.0
+
+flutter_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/icon/icon.png"
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/icon/fg.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
+flutter:
+  uses-material-design: true
