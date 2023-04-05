@@ -1,7 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:ohnost/model.dart';
-import 'package:ohnost/posts/user_info.dart';
 import 'package:routemaster/routemaster.dart';
 
 class TagList extends StatelessWidget {

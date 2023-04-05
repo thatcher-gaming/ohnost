@@ -1,14 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:ohnost/main.dart';
 import 'package:ohnost/model.dart';
-import 'package:ohnost/posts/main.dart';
 import 'package:ohnost/poststream.dart';
-import 'package:routemaster/routemaster.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'composer/composer.dart';
 
@@ -59,6 +52,11 @@ class _OhnostDashboardState extends State<OhnostDashboard>
             ).postFuture;
           },
           incrementCursorBy: 20,
+          appBar: SliverAppBar(
+            backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+            title: const Text("Dashboard"),
+            floating: true,
+          ),
           titleWidget: const Text("Dashboard")),
     );
   }

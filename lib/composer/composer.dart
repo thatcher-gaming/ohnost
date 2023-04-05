@@ -1,8 +1,8 @@
 import 'dart:convert';
+
 import 'package:animations/animations.dart';
-import 'package:http/http.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:http/http.dart';
 import 'package:ohnost/api.dart';
 import 'package:ohnost/blocks.dart';
 import 'package:ohnost/secrets.dart';
@@ -339,8 +339,7 @@ class PostPostRequest {
     String jsonString = jsonEncode(toJson());
     final Uri endpoint =
         Uri.parse("$apiBase/project/${AppSecrets.currentProjectHandle}/posts");
-    Response res = await authenticatedPost(endpoint, body: jsonString);
-    print("status code: ${res.statusCode}");
+    Response _ = await authenticatedPost(endpoint, body: jsonString);
   }
 
   PostPostRequest.fromJson(Map<String, dynamic> json) {
@@ -359,13 +358,11 @@ class PostPostRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['postState'] = postState;
     data['headline'] = headline;
     data['adultContent'] = adultContent;
-    if (blocks != null) {
-      data['blocks'] = blocks.map((v) => v.toJson()).toList();
-    }
+    data['blocks'] = blocks.map((v) => v.toJson()).toList();
     data['cws'] = cws;
     data['tags'] = tags;
     if (shareOfPostId != null) data['shareOfPostId'] = shareOfPostId;

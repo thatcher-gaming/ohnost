@@ -1,8 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:ohnost/composer/composer.dart';
-import 'package:ohnost/posts/main.dart';
 import 'package:ohnost/posts/user_info.dart';
 import 'package:ohnost/secrets.dart';
 import 'package:routemaster/routemaster.dart';
@@ -18,13 +15,13 @@ class CommentStream extends StatelessWidget {
     List<Widget> commentWidgets = [];
     comments.forEach(
       (key, value) {
-        value.forEach((element) {
+        for (final element in value) {
           Widget widget = CommentView(
             element,
             depth: 0,
           );
           commentWidgets.add(widget);
-        });
+        }
       },
     );
     return Column(

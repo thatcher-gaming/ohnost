@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ohnost/model.dart';
 import 'package:ohnost/posts/user_info.dart';
@@ -69,9 +68,9 @@ class ProjectEntry extends StatelessWidget {
                     children: [
                       if (project.displayName != null)
                         Text(
-                          project.displayName!.length <= 24 ?
-                          project.displayName! :
-                          "${project.displayName!.substring(0, 24)}…",
+                          project.displayName!.length <= 24
+                              ? project.displayName!
+                              : "${project.displayName!.substring(0, 24)}…",
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       Text(

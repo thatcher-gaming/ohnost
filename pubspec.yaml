@@ -38,6 +38,7 @@ dependencies:
   tuple: ^2.0.1
   url_launcher: ^6.1.7
   animations: ^2.0.7
+  html: ^0.15.2
   # webview_flutter: ^4.0.1
 
 dev_dependencies:

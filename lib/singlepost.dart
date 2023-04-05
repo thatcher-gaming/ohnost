@@ -1,9 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:ohnost/comments.dart';
 import 'package:ohnost/posts/main.dart';
-import 'package:routemaster/routemaster.dart';
 
 import 'model.dart';
 
@@ -58,7 +55,7 @@ class JustOnePost extends StatelessWidget {
 }
 
 class _InnerBit extends StatelessWidget {
-  const _InnerBit(this.post, this.commentsFuture, {super.key});
+  const _InnerBit(this.post, this.commentsFuture);
 
   final Post post;
   final Future<Map<String, List<CommentOuter>>> commentsFuture;

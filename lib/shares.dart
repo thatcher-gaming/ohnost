@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:ohnost/blocks.dart';
 import 'package:ohnost/model.dart';
-import 'package:ohnost/posts/main.dart';
 import 'package:ohnost/posts/user_info.dart';
 
 class ShareTree extends StatelessWidget {

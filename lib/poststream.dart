@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ohnost/blocks.dart';
-import 'package:ohnost/main.dart';
 import 'package:ohnost/model.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 

@@ -213,17 +213,6 @@ class Post {
 class Comments {
   late final Map<String, List<CommentOuter>> comments;
 
-  Comments.fromJson(Map<String, dynamic> json) {
-    print(json);
-    Map<String, dynamic> comments_raw = json['comments'];
-    List<CommentOuter> comments_less_raw = comments_raw.forEach((key, value) =>
-            print(
-                List.from(value).map((e) => CommentOuter.fromJson(e)).toList()))
-        as List<CommentOuter>;
-
-    print(comments_less_raw);
-  }
-
   static Future<Map<String, List<CommentOuter>>> getCommentsFromId(
       int id, String handle) async {
     final Uri endpoint = Uri.parse(
@@ -232,12 +221,12 @@ class Comments {
         headers: {'Cookie': 'connect.sid=${AppSecrets.cookie}'});
     Map<String, dynamic> body = jsonDecode(utf8.decode(res.bodyBytes));
     Map<String, dynamic> commentsRaw = body['result']['data']['comments'];
-    final Map<String, dynamic> comment_map = commentsRaw;
-    final Map<String, List<dynamic>> comment_map_with_list = comment_map.map(
+    final Map<String, dynamic> commentMap = commentsRaw;
+    final Map<String, List<dynamic>> commentMapWithList = commentMap.map(
       (key, value) => MapEntry(key, List.from(value)),
     );
-    final Map<String, List<CommentOuter>> comment_map_with_list_and_Stuff =
-        comment_map_with_list.map(
+    final Map<String, List<CommentOuter>> commentMapWithListAndStuff =
+        commentMapWithList.map(
       (key, value) => MapEntry(
           key,
           value
@@ -247,7 +236,7 @@ class Comments {
               .toList()),
     );
 
-    return comment_map_with_list_and_Stuff;
+    return commentMapWithListAndStuff;
   }
 }
 
@@ -361,7 +350,7 @@ class Block {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['type'] = type;
     if (attachment != null) {
       data['attachment'] = attachment!.toJson();
@@ -387,7 +376,7 @@ class AttachmentBlock {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['attachmentId'] = attachmentId;
     data['altText'] = altText;
     return data;
@@ -406,7 +395,7 @@ class MarkdownBlock {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['content'] = content;
     return data;
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ohnost/db.dart';
-import 'package:ohnost/secrets.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -23,10 +22,8 @@ class _SettingsPageState extends State<SettingsPage> {
               title: const Text("Settings"),
             ),
             body: Column(
-              children: [
-                TextField(
-                  
-                ),
+              children: const [
+                TextField(),
               ],
             ),
           );

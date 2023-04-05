@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ohnost/model.dart';
 import 'package:ohnost/posts/user_info.dart';
@@ -6,9 +5,6 @@ import 'package:ohnost/poststream.dart';
 import 'package:ohnost/secrets.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:tuple/tuple.dart';
-
-import 'composer/composer.dart';
-import 'main.dart';
 
 class ProfileView extends StatefulWidget {
   final String handle;

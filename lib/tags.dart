@@ -1,13 +1,9 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart';
 import 'package:ohnost/poststream.dart';
-import 'package:ohnost/secrets.dart';
 import 'package:ohnost/util.dart';
-import 'package:tuple/tuple.dart';
 
 import "model.dart";
 
@@ -66,6 +62,5 @@ class Tag {
     } catch (e) {
       return Future.error(e.toString());
     }
-    throw UnimplementedError();
   }
 }

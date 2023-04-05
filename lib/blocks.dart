@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:ohnost/model.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -119,7 +118,6 @@ class BlockView extends StatelessWidget {
               controller: controller,
               shrinkWrap: true,
               onTapLink: (text, href, title) async {
-                print(href);
                 launchUrl(Uri.parse(href!),
                     mode: LaunchMode.externalApplication);
               },
@@ -149,17 +147,18 @@ class ImageView extends StatelessWidget {
       for (var attachment in attachments)
         Image.network(attachment.attachment!.fileURL).image,
     ]);
-    showImageViewerPager(context, multiImageProvider, onPageChanged: (page) {
-      print("page changed to $page");
-    }, onViewerDismissed: (page) {
-      print("dismissed while on page $page");
-    });
+    showImageViewerPager(
+      context,
+      multiImageProvider,
+      onPageChanged: (page) {},
+      onViewerDismissed: (page) {},
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     double optimalWidth = MediaQuery.of(context).size.width;
-    double optimalHeighth = MediaQuery.of(context).size.height;
+    // double optimalHeighth = MediaQuery.of(context).size.height;
     return Column(
       children: [
         for (var block in attachments)

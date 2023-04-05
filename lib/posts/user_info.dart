@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ohnost/posts/date.dart';
-import 'package:ohnost/posts/main.dart';
 import 'package:routemaster/routemaster.dart';
 
 import '../main.dart';
@@ -52,12 +51,11 @@ class UserInfoPart extends StatelessWidget {
                 spacing: 8,
                 children: children,
               ),
+              const Spacer(),
               if (date != null) DateView(date!),
             ],
           )),
-      const SizedBox(
-        width: double.infinity,
-      ),
+      const SizedBox(width: double.infinity)
     ]);
   }
 }
@@ -70,7 +68,8 @@ class EmbiggenedUserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var children = user.displayName != null
+    var dispName = user.displayName ?? "";
+    var children = dispName.isNotEmpty
         ? <Widget>[
             Text(
               user.displayName!,
@@ -81,7 +80,12 @@ class EmbiggenedUserInfo extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall,
             )
           ]
-        : <Widget>[Text("@${user.handle}")];
+        : <Widget>[
+            Text(
+              "@${user.handle}",
+              style: Theme.of(context).textTheme.titleMedium,
+            )
+          ];
 
     return GestureDetector(
       onTap: () => Routemaster.of(context).push("/profile/${user.handle}"),

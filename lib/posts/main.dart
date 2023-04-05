@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ohnost/posts/tags.dart';
 import 'package:ohnost/posts/user_info.dart';
 import 'package:ohnost/shares.dart';
+
 import '../blocks.dart';
 import '../model.dart';
 import 'actions.dart';
-import 'date.dart';
 
 class PostView extends StatelessWidget {
   final Post post;
