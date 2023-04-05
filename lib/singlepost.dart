@@ -67,7 +67,7 @@ class _InnerBit extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        PostView(post: post),
+        PostView(post: post, usePadding: false),
         CommentButtonThing(post),
         FutureBuilder(
           future: commentsFuture,

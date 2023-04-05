@@ -19,13 +19,18 @@ class PostList {
     postFuture = getUserPosts(handle, cursor);
   }
 
-  PostList.fromHomeFeed({this.cursor = 0}) {
-    postFuture = getHomeFeedPosts(cursor);
+  PostList.fromHomeFeed({this.cursor = 0, int? timestamp}) {
+    postFuture = getHomeFeedPosts(cursor, timestamp);
   }
 
-  Future<List<Post>> getHomeFeedPosts(int cursor) async {
+  Future<List<Post>> getHomeFeedPosts(int cursor, int? reftimestamp) async {
     try {
-      final Uri endpoint = Uri.parse("https://cohost.org/?skipPosts=$cursor");
+      late final Uri endpoint;
+      if (reftimestamp != null) {
+        endpoint = Uri.parse("https://cohost.org/?refTimestamp=$reftimestamp&skipPosts=0");
+      } else {
+        endpoint = Uri.parse("https://cohost.org/?skipPosts=$cursor");
+      }
       Response res = await authenticatedGet(endpoint);
 
       if (res.statusCode == 200) {

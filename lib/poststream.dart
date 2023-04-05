@@ -7,7 +7,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'posts/main.dart';
 
 class PostStream extends StatefulWidget {
-  final Future<List<Post>> Function(int cursor, int limit) postGetter;
+  final Future<List<Post>> Function(int cursor, int limit, [int? timestamp]) postGetter;
   final int incrementCursorBy;
   final int initalCursor;
   final Widget titleWidget;
@@ -43,7 +43,9 @@ class _PostStreamState extends State<PostStream> {
       cursor = cursor + widget.incrementCursorBy;
     });
 
-    List<Post> nextPage = await widget.postGetter(cursor, 25);
+    int? refTimestamp = DateTime.tryParse(posts.last.publishedAt)?.millisecondsSinceEpoch;
+
+    List<Post> nextPage = await widget.postGetter(cursor, 25, refTimestamp);
 
     setState(() {
       loadingMorePages = false;
@@ -54,9 +56,12 @@ class _PostStreamState extends State<PostStream> {
   SliverChildDelegate postStreamDelegate() {
     return SliverChildBuilderDelegate((context, index) {
       if (index < posts.length) {
-        return PostView(
-          post: posts[index],
-          truncate: true,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: PostView(
+            post: posts[index],
+            truncate: true,
+          ),
         );
       }
       return null;
@@ -74,7 +79,7 @@ class _PostStreamState extends State<PostStream> {
         else
           SliverAppBar.large(
             title: widget.titleWidget,
-            backgroundColor: Theme.of(context).colorScheme.surface,
+            backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
             centerTitle: true,
             actions: [
               IconButton(
@@ -88,7 +93,7 @@ class _PostStreamState extends State<PostStream> {
             ],
           ),
         FutureBuilder(
-          future: widget.postGetter(0, 25),
+          future: widget.postGetter(0, widget.incrementCursorBy),
           builder: (context, snapshot) {
             Widget child;
             if (snapshot.hasData) {

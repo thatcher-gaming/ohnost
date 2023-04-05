@@ -88,7 +88,7 @@ class CommentButtonThing extends StatelessWidget {
 
     return Card(
       shadowColor: Colors.transparent,
-      margin: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+      margin: const EdgeInsets.fromLTRB(12, 0, 12, 8),
       elevation: 2,
       child: SizedBox(
         width: double.infinity,

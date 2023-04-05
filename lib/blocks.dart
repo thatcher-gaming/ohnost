@@ -95,21 +95,23 @@ class BlockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (block.typeGood == BlockType.markdown) {
-      RegExp htmlRe =
-          RegExp(r"(<(.*)>(.*)</([^br][A-Za-z0-9]+)>)", caseSensitive: false);
-      bool isHTML = htmlRe.hasMatch(block.markdown!.content);
-      Widget widgetToReturn = isHTML
-          ? HtmlWidget(
-              block.markdown!.content,
-              onTapUrl: (p0) async {
-                if (await canLaunchUrl(Uri.parse(p0))) {
-                  launchUrl(Uri.parse(p0),
-                      mode: LaunchMode.externalApplication);
-                }
-                return true;
-              },
-            )
-          : Markdown(
+      // RegExp htmlRe =
+      //     RegExp(r"(<(.*)>(.*)</([^br][A-Za-z0-9]+)>)", caseSensitive: false);
+      // bool isHTML = htmlRe.hasMatch(block.markdown!.content);
+      Widget widgetToReturn =
+          // isHTML
+          //     ? HtmlWidget(
+          //         block.markdown!.content,
+          //         onTapUrl: (p0) async {
+          //           if (await canLaunchUrl(Uri.parse(p0))) {
+          //             launchUrl(Uri.parse(p0),
+          //                 mode: LaunchMode.externalApplication);
+          //           }
+          //           return true;
+          //         },
+          //       )
+          //     :
+          Markdown(
               data: block.markdown!.content,
               padding: const EdgeInsets.only(top: 4, bottom: 8),
               selectable: true,

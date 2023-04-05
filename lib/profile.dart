@@ -25,9 +25,11 @@ class _ProfileViewState extends State<ProfileView>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     Future<Tuple2<PostingProject, List<Post>>> profileFuture =
         PostingProject.getUserData(widget.handle);
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
       floatingActionButton: widget.handle == AppSecrets.currentProjectHandle
           ? FloatingActionButton(
               heroTag: "btn2",
@@ -60,13 +62,13 @@ class _ProfileViewState extends State<ProfileView>
             }
 
             return PostStream(
-              postGetter: (cursor, _) =>
+              postGetter: (cursor, _, [timestamp]) =>
                   PostList.fromUser(widget.handle, cursor: cursor).postFuture,
               incrementCursorBy: 1,
               appBar: SliverAppBar.large(
                 title: _PageTitle(profile: profile),
                 actions: profileActions,
-                backgroundColor: Theme.of(context).colorScheme.surface,
+                backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
                 centerTitle: true,
               ),
             );

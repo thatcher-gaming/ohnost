@@ -34,15 +34,19 @@ class SharedPost extends StatelessWidget {
     return SizedBox(
       child: Card(
         shadowColor: Colors.transparent,
-        elevation: 7,
+        elevation: 1,
+        shape: const Border(),
         surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
         margin: const EdgeInsets.symmetric(vertical: 4),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
+          padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              UserInfoPart(sharedPost.postingProject),
+              UserInfoPart(
+                sharedPost.postingProject,
+                date: sharedPost.publishedAt,
+              ),
               BlocksView.frompost(
                 sharedPost,
                 truncate: true,

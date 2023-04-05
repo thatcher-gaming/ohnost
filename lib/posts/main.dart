@@ -10,40 +10,61 @@ import 'date.dart';
 class PostView extends StatelessWidget {
   final Post post;
   final bool truncate;
+  final bool usePadding;
 
   const PostView({
     required this.post,
     this.truncate = false,
+    this.usePadding = true,
     super.key,
   });
+
+  final insets = const EdgeInsets.symmetric(horizontal: 16);
 
   @override
   Widget build(BuildContext context) {
     return Hero(
       tag: post.postId,
       child: Card(
-          shadowColor: Colors.transparent,
-          surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
-          elevation: 1,
-          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        shadowColor: Colors.transparent,
+        surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+        color: Theme.of(context).colorScheme.surface,
+        elevation: 0,
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+        child: ClipRect(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+            padding: const EdgeInsets.only(bottom: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // the bit saying who the user is
-                UserInfoPart(post.postingProject, date: post.publishedAt,),
+                Padding(
+                    padding: insets,
+                    child: EmbiggenedUserInfo(
+                      post.postingProject,
+                      date: post.publishedAt,
+                    )),
                 // show previous shares if they exist
                 if (post.shareTree.isNotEmpty) ShareTree(post),
-                // the post content itself
-                BlocksView.frompost(post, truncate: truncate),
-                // the tags if they exist
-                if (post.tags.isNotEmpty) TagList(post.tags),
-                // fun buttons
-                PostViewActions(post)
+                Padding(
+                  padding: insets,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // the post content itself
+                      BlocksView.frompost(post, truncate: truncate),
+                      // the tags if they exist
+                      if (post.tags.isNotEmpty) TagList(post.tags),
+                      // fun buttons
+                      PostViewActions(post)
+                    ],
+                  ),
+                ),
               ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -62,6 +62,56 @@ class UserInfoPart extends StatelessWidget {
   }
 }
 
+class EmbiggenedUserInfo extends StatelessWidget {
+  final PostingProject user;
+  final String date;
+
+  const EmbiggenedUserInfo(this.user, {required this.date, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var children = user.displayName != null
+        ? <Widget>[
+            Text(
+              user.displayName!,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Text(
+              "@${user.handle}",
+              style: Theme.of(context).textTheme.titleSmall,
+            )
+          ]
+        : <Widget>[Text("@${user.handle}")];
+
+    return GestureDetector(
+      onTap: () => Routemaster.of(context).push("/profile/${user.handle}"),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 16, bottom: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ProfilePicture(
+              user.avatarPreviewURL,
+              height: 48,
+              width: 48,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Wrap(
+                direction: Axis.vertical,
+                children: children,
+              ),
+            ),
+            const Spacer(),
+            DateView(date)
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class ProfilePicture extends StatelessWidget {
   final String uri;
   final double width;
@@ -78,7 +128,7 @@ class ProfilePicture extends StatelessWidget {
       child: Semantics(
         hidden: true,
         child: CachedNetworkImage(
-          imageUrl: "$uri?dpr=1&width=$width&height=$height&fit=cover",
+          imageUrl: "$uri?dpr=2&width=$width&height=$height&fit=cover",
           cacheManager: cacheManager,
           width: width,
           height: height,

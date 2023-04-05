@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ohnost/singlepost.dart';
 import 'package:routemaster/routemaster.dart';
 
 import '../composer/composer.dart';
@@ -79,6 +80,9 @@ class _PostViewActionsState extends State<PostViewActions> {
     final ButtonStyle buttonStyle = ButtonStyle(
         backgroundColor:
             MaterialStatePropertyAll(Theme.of(context).colorScheme.surface),
+        surfaceTintColor:
+            MaterialStatePropertyAll(Theme.of(context).colorScheme.surfaceTint),
+        elevation: const MaterialStatePropertyAll(2),
         foregroundColor:
             MaterialStatePropertyAll(Theme.of(context).colorScheme.onSurface));
     final ButtonStyle selectedButtonStyle = ButtonStyle(
@@ -110,8 +114,14 @@ class _PostViewActionsState extends State<PostViewActions> {
                   onPressed: !widget.post.sharesLocked
                       ? () {
                           HapticFeedback.lightImpact();
-                          Routemaster.of(context).push(
-                              '/share/${widget.post.postingProject.handle}/${widget.post.postId}');
+                          Navigator.of(context, rootNavigator: true)
+                              .push(DialogRoute(
+                            context: context,
+                            builder: (context) => PostComposer.share(
+                              postId: widget.post.postId,
+                              handle: widget.post.postingProject.handle,
+                            ),
+                          ));
                         }
                       : null,
                   icon: const Icon(Icons.cached),
@@ -141,9 +151,9 @@ class CommentsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Routemaster.of(context).push(
-            '/post/${post.postingProject.handle}/${post.postId}',
-            queryParameters: {"post": jsonEncode(post.sourceJson)});
+        Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute(builder: (context) => JustOnePost(post),)
+        );
       },
       style: buttonStyle,
       child: Padding(

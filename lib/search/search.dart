@@ -25,6 +25,7 @@ class _SearchPageState extends State<SearchPage>
   late List<PostingProject> projects = [];
 
   searchForThing(String value) async {
+    value = value.trim();
     List<PostingProject> projects = await projectQuery(value);
     List<String> tags = await tagQuery(value);
 

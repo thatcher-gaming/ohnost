@@ -31,9 +31,10 @@ class _TagPageState extends State<TagPage> {
       tag = widget.tag;
     });
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
       body: PostStream(
         titleWidget: Text("#${widget.tag.tag}"),
-        postGetter: (cursor, limit) => widget.tag.getItems(cursor),
+        postGetter: (cursor, limit, [timestamp]) => widget.tag.getItems(cursor),
       ),
     );
   }

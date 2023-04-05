@@ -70,13 +70,13 @@ RoutemasterDelegate routemaster = RoutemasterDelegate(
           ),
           maintainState: false),
       '/settings': (data) => const MaterialPage(child: SettingsPage()),
-      '/compose': (data) => MaterialPage(child: PostComposer()),
-      '/share/:handle/:id': (data) => MaterialPage(
+      '/compose': (data) => ComposerPage(child: PostComposer()),
+      '/share/:handle/:id': (data) => ComposerPage(
             child: PostComposer.share(
                 postId: int.parse(data.pathParameters['id']!),
                 handle: data.pathParameters['handle']!),
           ),
-      '/comment/:id': (data) => MaterialPage(
+      '/comment/:id': (data) => ComposerPage(
             child: PostComposer.comment(
               postId: int.parse(data.pathParameters['id']!),
             ),
