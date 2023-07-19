@@ -1,7 +1,7 @@
 # ohnost
 
 > ## ⚠️ update!! aaaaah!!!!!
-> looks like cohost isn't long for this world, so this repo is going away into the disney vault.
+> cohost appears to be circling the drain and i've lost any and all motivation to work on this, so this repo is going away into the disney vault.
 >
 > it's a bit of a shame because i spent way too much time writing this but also it wasn't very good. peace and love
 
